@@ -168,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(scrollToTopBtn) scrollToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', adjustIndicatorPosition);
+        if(activeFilterIndicator) activeFilterIndicator.addEventListener('click', handleClearFloatingFilter);
     }
 
     /**
@@ -177,6 +178,39 @@ document.addEventListener('DOMContentLoaded', () => {
         const header = document.getElementById('page-header');
         if (header && activeFilterIndicator) {
             activeFilterIndicator.style.top = `${header.offsetHeight}px`;
+        }
+    }
+
+    /**
+     * Maneja el evento de click en el botón de limpiar del indicador de filtro flotante.
+     * @param {Event} e - Evento de click.
+     */
+    function handleClearFloatingFilter(e) {
+        const target = e.target.closest('.clear-filter-btn');
+        if (!target) return;
+
+        // Limpiar todos los filtros
+        document.querySelectorAll('#filtros-section .etiqueta-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.norma-card').forEach(card => {
+            card.style.display = '';
+        });
+
+        // Ocultar el indicador
+        if (activeFilterIndicator) {
+            activeFilterIndicator.classList.remove('visible');
+        }
+
+        // Scroll a la sección de filtros
+        if (filtrosSection) {
+            const header = document.getElementById('page-header');
+            const headerHeight = header ? header.offsetHeight : 0;
+            const elementTop = filtrosSection.getBoundingClientRect().top + window.scrollY;
+            const scrollToPosition = elementTop - headerHeight - 16; // 16px de margen
+
+            window.scrollTo({
+                top: scrollToPosition,
+                behavior: 'smooth'
+            });
         }
     }
 
@@ -210,9 +244,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- INDICADOR DE FILTRO ACTIVO ---
         if (activeFilterIndicator) {
             if (filtro !== 'all') {
-                // Extraer solo el nombre de la etiqueta, sin el contador
                 const etiquetaNombre = target.childNodes[0].nodeValue.trim();
-                activeFilterIndicator.innerHTML = `<span class="active-filter-button">Filtro: ${etiquetaNombre}</span>`;
+                activeFilterIndicator.innerHTML = `
+                    <span class="active-filter-button">
+                        Filtro: ${etiquetaNombre}
+                    </span>
+                    <button class="clear-filter-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                `;
                 activeFilterIndicator.classList.add('visible');
             } else {
                 activeFilterIndicator.classList.remove('visible');
