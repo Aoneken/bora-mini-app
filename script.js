@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const filtrosSection = document.getElementById('filtros-section');
     const normasBody = document.getElementById('normas-body');
     const scrollToTopBtn = document.getElementById('scroll-to-top');
-    const separator = document.querySelector('.separator');
 
     // --- RENDERIZADO ---
     // Estas funciones se encargan de generar el HTML y mostrar los datos en la página.
@@ -196,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Scroll a la línea divisoria
+        const separator = document.querySelector('.separator');
         if (separator) {
             separator.scrollIntoView({ behavior: 'smooth' });
         }
