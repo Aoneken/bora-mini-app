@@ -194,6 +194,7 @@ main.container {
     background: rgba(2, 6, 23, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    gap: 0.5rem; /* Espacio entre el nombre del filtro y el botón de limpiar */
     
     /* Oculto por defecto */
     visibility: hidden;
@@ -219,7 +220,24 @@ main.container {
     border-radius: 9999px;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+}
+
+.clear-filter-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.clear-filter-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-primary);
 }
 
 /* ------------------- */
