@@ -180,6 +180,49 @@ main.container {
 }
 
 /* ------------------- */
+/* INDICADOR DE FILTRO */
+/* ------------------- */
+.active-filter-container {
+    position: sticky;
+    /* El 'top' se ajustará con JS para quedar debajo del header */
+    top: 60px; /* Valor inicial de fallback */
+    z-index: 19; /* Menor que el header (20) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* Oculto por defecto */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: all 0.3s ease-in-out;
+}
+
+.active-filter-container.visible {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.active-filter-button {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    background-color: rgba(34, 211, 238, 0.1);
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ------------------- */
 /* SÍNTESIS DEL DÍA    */
 /* ------------------- */
 .sintesis-container {
