@@ -194,10 +194,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Scroll a la línea divisoria
+        // Scroll a la línea divisoria, ajustando por el header fijo
         const separator = document.querySelector('.separator');
         if (separator) {
-            separator.scrollIntoView({ behavior: 'smooth' });
+            const header = document.getElementById('page-header');
+            const headerHeight = header ? header.offsetHeight : 0;
+            const separatorTop = separator.offsetTop;
+            
+            // Se calcula la posición final: top del separador - altura del header - un margen.
+            const margin = 16; // 1rem de espacio para que no quede pegado al header.
+            const scrollToPosition = separatorTop - headerHeight - margin; 
+
+            window.scrollTo({
+                top: scrollToPosition,
+                behavior: 'smooth'
+            });
         }
     }
 
