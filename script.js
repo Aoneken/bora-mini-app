@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const normasBody = document.getElementById('normas-body');
     const scrollToTopBtn = document.getElementById('scroll-to-top');
     const clearFilterFab = document.getElementById('clear-filter-fab');
+    const activeFilterIndicator = document.getElementById('active-filter-indicator');
 
     // --- RENDERIZADO ---
     // Estas funciones se encargan de generar el HTML y mostrar los datos en la página.
@@ -151,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Se configuran los event listeners
             setupEventListeners();
+            adjustIndicatorPosition();
         } catch (error) {
             console.error("Error en la función main:", error);
             if (normasBody) { normasBody.innerHTML = `<p class="loading-message">No se pudieron cargar las normativas.</p>`; }
@@ -167,6 +169,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if(scrollToTopBtn) scrollToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         if(clearFilterFab) clearFilterFab.addEventListener('click', handleClearFilterClick);
         window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('resize', adjustIndicatorPosition);
+    }
+
+    /**
+     * Ajusta la posición del indicador de filtro activo para que quede debajo del header.
+     */
+    function adjustIndicatorPosition() {
+        const header = document.getElementById('page-header');
+        if (header && activeFilterIndicator) {
+            activeFilterIndicator.style.top = `${header.offsetHeight}px`;
+        }
     }
 
     /**
@@ -179,10 +192,9 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.display = '';
         });
 
-        // Ocultar el botón flotante
-        if (clearFilterFab) {
-            clearFilterFab.classList.remove('visible');
-        }
+        // Ocultar los indicadores
+        if (clearFilterFab) clearFilterFab.classList.remove('visible');
+        if (activeFilterIndicator) activeFilterIndicator.classList.remove('visible');
 
         // Scroll a la sección de filtros
         if (filtrosSection) {
@@ -210,11 +222,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Se actualiza la clase 'active' en los botones de filtro
         document.querySelectorAll('#filtros-section .etiqueta-btn').forEach(btn => btn.classList.remove('active'));
+        
         if (filtro !== 'all') {
             target.classList.add('active');
             if (clearFilterFab) clearFilterFab.classList.add('visible');
+            if (activeFilterIndicator) {
+                const etiquetaNombre = target.childNodes[0].nodeValue.trim();
+                activeFilterIndicator.innerHTML = `<span class="active-filter-button">Filtro: ${etiquetaNombre}</span>`;
+                activeFilterIndicator.classList.add('visible');
+            }
         } else {
             if (clearFilterFab) clearFilterFab.classList.remove('visible');
+            if (activeFilterIndicator) activeFilterIndicator.classList.remove('visible');
         }
 
         // Se filtran las normas según la etiqueta seleccionada
