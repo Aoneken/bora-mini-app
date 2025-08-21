@@ -1,0 +1,97 @@
+<!--
+  Este es el documento principal de la aplicación web.
+  Define la estructura de la página, incluyendo la cabecera, el contenido principal y el pie de página.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Metadatos básicos del documento -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resumen del Boletín Oficial por Orbita</title>
+
+    <!-- Importación de fuentes de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" class="crossorigin">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <!-- Enlace a la hoja de estilos CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Fondo de la aplicación (imagen) -->
+    <div id="app-background"></div>
+
+    <!-- Contenido principal de la aplicación -->
+    <div id="app-content">
+        <!-- Cabecera de la página -->
+        <header id="page-header" class="sticky-header">
+            <div class="container header-content">
+                <!-- Logo de la aplicación (se carga con JavaScript) -->
+                <div class="header-logo">
+                    <!-- El logo de Orbita se cargará aquí con JS -->
+                </div>
+                <!-- Contenedor de la marca y la fecha -->
+                <div class="header-brand-date-wrapper">
+                    <div class="header-top-row">
+                        <!-- Fecha del boletín (se carga con JavaScript) -->
+                        <div id="header-date" class="header-date"></div>
+                        <!-- Nombre de la marca -->
+                        <h1 class="brand-name">Orbita</h1>
+                    </div>
+                    <!-- Subtítulo de la marca -->
+                    <p class="brand-subtitle">Boletín Oficial de la República Argentina</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="container">
+            <!-- Sección de introducción (síntesis del día) -->
+            <section id="intro-section">
+                <div class="sintesis-container">
+                    <div id="sintesis-del-dia" class="glass-card sintesis-card">
+                        <h3>Síntesis del Día</h3>
+                        <!-- Texto de la síntesis (se carga con JavaScript) -->
+                        <p id="sintesis-texto">Cargando...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Panel de estadísticas (se carga con JavaScript) -->
+            <section id="stats-panel" class="glass-card">
+                <!-- El panel de estadísticas se cargará aquí con JS -->
+            </section>
+
+            <!-- Sección de filtros (se carga con JavaScript) -->
+            <nav id="filtros-section" class="glass-card">
+                <!-- Los filtros se cargarán aquí -->
+            </nav>
+
+            <!-- Línea divisoria -->
+            <hr class="separator">
+
+            <!-- Cuerpo de las normas (se carga con JavaScript) -->
+            <div id="normas-body">
+                <!-- Las normas se cargarán aquí -->
+            </div>
+        </main>
+
+        <!-- Pie de página -->
+        <footer id="page-footer">
+            <p>Sistema de Relevamiento de Información Institucional de <a href="https://t.me/BORA_IA" target="_blank" rel="noopener noreferrer">Orbita</a>.</p>
+            <p>Este documento tiene fines informativos y no sustituye el contenido oficial.</p>
+            <p>Contacto: <a href="mailto:comercial@aoneken.com">comercial@aoneken.com</a></p>
+        </footer>
+
+        <!-- Botón para volver al principio -->
+        <button id="scroll-to-top" title="Ir a Filtros">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+        </button>
+    </div>
+
+    <!-- Enlace al script de JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

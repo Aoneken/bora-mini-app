@@ -1,0 +1,68 @@
+:root{--color-bg:#020617;--color-text-primary:#f1f5f9;--color-text-secondary:#cbd5e1;--color-accent:#22d3ee;--color-link:var(--color-accent);--color-link-hover:#a5f3fc}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body {font-family:'Inter',sans-serif;color:var(--color-text-secondary);line-height:1.6;background-color: var(--color-bg);}
+#app-background {position: fixed;top: 0;left: 0;width: 100vw;height: 100vh;z-index: -1;background-image: url('https://images.pexels.com/photos/1287145/pexels-photo-1287145.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');background-size: cover;background-position: center center;}
+#app-content {position: relative;z-index: 1;}
+
+.container{width:100%;max-width:900px;margin:0 auto;padding:0} /* CAMBIO: Padding base a 0 para controlar desde adentro */
+a{color:var(--color-link);transition:color 0.2s ease-in-out;text-decoration:none}
+a:hover{color:var(--color-link-hover);text-decoration:underline}
+.glass-card {background: rgba(30, 41, 59, 0.65);backdrop-filter: blur(14px);-webkit-backdrop-filter: blur(14px);border: 1px solid rgba(255, 255, 255, 0.1);border-radius: 12px;box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);}
+.sticky-header{position:sticky;top:0;z-index:20;background: rgba(15, 23, 42, 0.7);backdrop-filter: blur(14px);-webkit-backdrop-filter: blur(14px);border-bottom: 1px solid rgba(255, 255, 255, 0.1);}
+
+.header-content{display:flex;justify-content:space-between;align-items:center;gap:1rem; padding: 0.5rem 1rem;}
+.header-logo{flex-shrink:0}
+.logo-img{height: 40px;width: auto;object-fit: contain;border-radius: 8px;}
+.header-brand-date-wrapper { text-align: right; }
+.header-top-row {display: flex;justify-content: flex-end;align-items: baseline;gap: 0.75rem;}
+.header-date {font-family: 'Inter', sans-serif;font-size: 0.9rem;font-weight: 500;color: var(--color-text-secondary);}
+.brand-name {font-family:'IBM Plex Mono',monospace;font-size:1.5rem;font-weight:700;color: var(--color-text-primary);line-height: 1.1;}
+.brand-subtitle {font-size:0.75rem;color: var(--color-text-secondary);margin-top: 0.1rem;}
+main.container {padding-top: 1rem;}
+
+.sintesis-container{padding: 0 1rem;}
+.sintesis-card{padding: 1.25rem 1.5rem;}
+.sintesis-card h3{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--color-accent);margin-bottom:0.5rem;font-size: 1.1rem;}
+.sintesis-card p{color:var(--color-text-primary);line-height:1.6; font-size: 0.95rem;}
+
+#stats-panel {padding: 0; margin: 1rem 1rem; overflow: hidden;}
+.stats-header {display: flex;justify-content: space-between;align-items: baseline;padding: 0.5rem 1.25rem; background-color: rgba(0,0,0,0.15);}
+.stats-total-label {font-family: 'IBM Plex Mono', monospace;font-size: 0.9rem;color: var(--color-text-secondary);}
+.stats-total-value {font-size: 1.2rem; font-weight: 700;color: var(--color-text-primary);}
+.stats-body {padding: 0.8rem 1.25rem;display: flex;flex-direction: column;gap: 0.6rem;}
+.stat-row {display: flex;justify-content: space-between;align-items: center;gap: 1.5rem;font-size: 0.9rem;}
+.stat-row-label {flex-shrink: 0;color: var(--color-text-secondary); font-size: 0.8rem;}
+.stat-row-label span {font-size: 0.75rem;opacity: 0.8;}
+.stat-row-value-bar {flex-grow: 1;min-width: 0;}
+.bar-container {width: 100%;background-color: rgba(0, 0, 0, 0.25);border-radius: 4px;height: 8px; overflow: hidden;}
+.bar {height: 100%;background-color: var(--color-accent);border-radius: 4px;transition: width 0.5s ease-out;}
+
+#filtros-section{padding: 1rem 1.25rem; margin: 1rem 1rem;} /* CAMBIO: Compactado */
+.filtros-header{display:flex;justify-content:space-between;align-items:center;margin-bottom: 0.75rem;flex-wrap:wrap;gap: 0.75rem;}
+.filtros-header h2{font-family:'IBM Plex Mono',monospace;font-size: 1.25rem;font-weight:600;color:#e2e8f0;display:flex;align-items:center;gap:0.5rem;}
+/* CAMBIO: Botón "Limpiar" estilo GHOST */
+.filtros-header .etiqueta-btn[data-filtro="all"] {background: transparent; color: var(--color-text-secondary); border: 1px solid var(--color-text-secondary); opacity: 0.8;}
+.filtros-header .etiqueta-btn[data-filtro="all"]:hover {background: rgba(203, 213, 225, 0.1); opacity: 1;}
+.etiquetas-container{display:flex;flex-wrap:wrap;gap: 0.5rem;}
+.etiqueta-btn{font-family:'IBM Plex Mono',monospace;font-size: 0.75rem;background-color:rgba(51, 65, 85, 0.7);color:#cbd5e1;border:1px solid transparent;padding: 0.25rem 0.75rem;border-radius:9999px;cursor:pointer;transition:all 0.2s ease;}
+.etiqueta-btn:hover{background-color:rgba(71, 85, 105, 0.8);color:var(--color-text-primary)}
+.etiqueta-btn.active{background-color:var(--color-accent);color:#020617;font-weight:700;border-color:var(--color-accent)}
+.etiqueta-count{font-size:0.7rem;opacity:0.7;margin-left:0.3rem}
+
+hr.separator{margin:2rem 1rem;border:none; height:1px; background-image: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);}
+
+#normas-body{display:grid;gap:1.5rem; padding: 0 1rem; margin-bottom: 2rem;} /* CAMBIO: Añadido padding y margen inferior */
+.norma-card {padding: 1.25rem 1.5rem; overflow: hidden;}
+/* CAMBIO: Nuevo estilo para el emisor */
+.norma-emisor {font-size: 0.65rem !important; color: var(--color-accent) !important; font-weight: 600;}
+.norma-descripcion{color:var(--color-text-primary);margin:1rem 0;font-style:italic;font-weight:600}
+.norma-resumen{background-color:rgba(0,0,0,0.2);padding:1rem;border-radius:8px;color:var(--color-text-secondary);border-left:4px solid var(--color-accent)}
+/* CAMBIO: Estilo más fuerte para los hashtags */
+.norma-etiquetas-container{margin-top:1.25rem; font-family:'IBM Plex Mono',monospace; font-size: 0.75rem; color: var(--color-text-secondary); opacity: 0.9;}
+
+#page-footer{text-align:center;padding:2rem 1rem;background-color: rgba(15, 23, 42, 0.7);backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-size:0.875rem}
+#scroll-to-top{position:fixed;bottom:1.25rem;right:1.25rem;width:3rem;height:3rem;background-color:var(--color-accent);color:#020717;border-radius:9999px;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05);z-index:30;transition:opacity 0.3s,visibility 0.3s,transform 0.3s;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transform:translateY(10px)}
+#scroll-to-top.visible{opacity:1;visibility:visible;transform:translateY(0)}
+.loading-message{text-align:center;padding:2rem;font-style:italic;}
