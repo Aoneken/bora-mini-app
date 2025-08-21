@@ -185,13 +185,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Se filtran las normas según la etiqueta seleccionada
         document.querySelectorAll('.norma-card').forEach(card => {
-            // Se obtienen las etiquetas de la tarjeta y se eliminan los elementos vacíos que puedan surgir del split.
             const etiquetasDeLaTarjeta = (card.dataset.etiquetas || '').split(' ').filter(tag => tag);
 
             if (filtro === 'all' || etiquetasDeLaTarjeta.includes(filtro)) {
-                card.classList.remove('hidden');
+                card.style.display = ''; // Se muestra la tarjeta
             } else {
-                card.classList.add('hidden');
+                card.style.display = 'none'; // Se oculta la tarjeta
             }
         });
     }
