@@ -199,7 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (separator) {
             const header = document.getElementById('page-header');
             const headerHeight = header ? header.offsetHeight : 0;
-            const separatorTop = separator.offsetTop;
+            
+            // Usamos getBoundingClientRect() para una posición más precisa.
+            const separatorTop = separator.getBoundingClientRect().top + window.scrollY;
             
             // Se calcula la posición final: top del separador - altura del header - un margen.
             const margin = 16; // 1rem de espacio para que no quede pegado al header.
