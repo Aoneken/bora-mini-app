@@ -283,7 +283,7 @@ main.container {
 /* FILTROS             */
 /* ------------------- */
 #filtros-section {
-    padding: 0.8rem 1rem;
+    padding: 0.6rem 0.8rem; /* Reducido */
     margin: 1rem 1rem;
 }
 
@@ -291,14 +291,14 @@ main.container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem; /* Reducido */
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 0.5rem; /* Reducido */
 }
 
 .filtros-header h2 {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 1.1rem;
+    font-size: 1rem; /* Reducido */
     font-weight: 600;
     color: #e2e8f0;
     display: flex;
@@ -322,16 +322,16 @@ main.container {
 .etiquetas-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.3rem; /* Reducido */
 }
 
 .etiqueta-btn {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.65rem; /* Reducido */
     background-color: rgba(51, 65, 85, 0.7);
     color: #cbd5e1;
     border: 1px solid transparent;
-    padding: 0.2rem 0.6rem;
+    padding: 0.15rem 0.5rem; /* Reducido */
     border-radius: 9999px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -350,9 +350,9 @@ main.container {
 }
 
 .etiqueta-count {
-    font-size: 0.65rem;
+    font-size: 0.6rem; /* Reducido */
     opacity: 0.7;
-    margin-left: 0.3rem;
+    margin-left: 0.25rem; /* Reducido */
 }
 
 /* ------------------- */
