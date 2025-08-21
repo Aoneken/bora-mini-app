@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filtrosSection = document.getElementById('filtros-section');
     const normasBody = document.getElementById('normas-body');
     const scrollToTopBtn = document.getElementById('scroll-to-top');
+    const activeFilterIndicator = document.getElementById('active-filter-indicator');
 
     // --- RENDERIZADO ---
     // Estas funciones se encargan de generar el HTML y mostrar los datos en la página.
@@ -150,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Se configuran los event listeners
             setupEventListeners();
+            adjustIndicatorPosition();
         } catch (error) {
             console.error("Error en la función main:", error);
             if (normasBody) { normasBody.innerHTML = `<p class="loading-message">No se pudieron cargar las normativas.</p>`; }
@@ -165,6 +167,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if(filtrosSection) filtrosSection.addEventListener('click', handleFilterClick);
         if(scrollToTopBtn) scrollToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('resize', adjustIndicatorPosition);
+    }
+
+    /**
+     * Ajusta la posición del indicador de filtro activo para que quede debajo del header.
+     */
+    function adjustIndicatorPosition() {
+        const header = document.getElementById('page-header');
+        if (header && activeFilterIndicator) {
+            activeFilterIndicator.style.top = `${header.offsetHeight}px`;
+        }
     }
 
     /**
@@ -193,6 +206,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.style.display = 'none'; // Se oculta la tarjeta
             }
         });
+
+        // --- INDICADOR DE FILTRO ACTIVO ---
+        if (activeFilterIndicator) {
+            if (filtro !== 'all') {
+                // Extraer solo el nombre de la etiqueta, sin el contador
+                const etiquetaNombre = target.childNodes[0].nodeValue.trim();
+                activeFilterIndicator.innerHTML = `<span class="active-filter-button">Filtro: ${etiquetaNombre}</span>`;
+                activeFilterIndicator.classList.add('visible');
+            } else {
+                activeFilterIndicator.classList.remove('visible');
+            }
+        }
 
         // Scroll a la línea divisoria, ajustando por el header fijo
         const separator = document.querySelector('.separator');
