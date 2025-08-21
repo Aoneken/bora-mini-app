@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Renderiza el logo en la cabecera.
-     * @param {object} datos - Objeto con los datos de la aplicación.
+     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `datosInstitucionales`.
      */
     function renderHeader(datos) {
         if (!headerLogoContainer) return;
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     /**
      * Renderiza la fecha en la cabecera.
-     * @param {object} datos - Objeto con los datos de la aplicación.
+     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `fecha`.
      */
     function renderHeaderDate(datos) {
         if (headerDate) {
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Renderiza la síntesis del día.
-     * @param {object} datos - Objeto con los datos de la aplicación.
+     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `sintesisDelDia`.
      */
     function renderIntro(datos) {
         if (sintesisTexto) {
@@ -61,22 +61,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Renderiza el panel de estadísticas.
-     * @param {object} datos - Objeto con los datos de la aplicación.
+     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `estadisticas`.
      */
     function renderStatsPanel(datos) {
         if (!statsPanel || !datos.estadisticas) return;
         const { totalNormas, desgloseTipos } = datos.estadisticas;
-        const TIPO_ORDEN = ["DECRETO", "DECRETOS (SUPLEMENTO)", "DECISION ADMINISTRATIVA", "RESOLUCION", "RESOLUCIONE", "DISPOSICION", "DISPOSICIONE", "CONVENCIONES COLECTIVAS DE TRABAJO", "LAUDO", "AVISOS OFICIALE", "CONCURSO", "CONCURSOS OFICIALE", "AVISOS OFICIALES - ANTERIOR"];
+        const TIPO_ORDEN = ["DECRETO", "DECRETOS (SUPLEMENTO)", "DECISION ADMINISTRATIVA", "RESOLUCION", "DISPOSICION", "CONVENCIONES COLECTIVAS DE TRABAJO", "LAUDO", "AVISOS OFICIALES", "CONCURSO", "CONCURSOS OFICIALES", "AVISOS OFICIALES - ANTERIOR"];
         const tiposOrdenados = Object.entries(desgloseTipos).sort(([tipoA], [tipoB]) => {
-            const indexA = TIPO_ORDEN.indexOf(tipoA); const indexB = TIPO_ORDEN.indexOf(tipoB);
-            if (indexA === -1) return 1; if (indexB === -1) return -1;
+            const indexA = TIPO_ORDEN.indexOf(tipoA.toUpperCase());
+            const indexB = TIPO_ORDEN.indexOf(tipoB.toUpperCase());
+            if (indexA === -1) return 1;
+            if (indexB === -1) return -1;
             return indexA - indexB;
         });
         const maxCount = Math.max(...Object.values(desgloseTipos));
         if (maxCount === 0) return;
         const rowsHtml = tiposOrdenados.map(([tipo, count]) => {
             const widthPercent = (count / maxCount) * 100;
-            let tipoFormateado = tipo.toLowerCase().replace(/_/g, ' ').replace("resolucione", "resolución").replace("disposicione", "disposición").replace("aviso oficiale", "aviso oficial");
+            let tipoFormateado = tipo.toLowerCase().replace(/_/g, ' ');
             tipoFormateado = tipoFormateado.charAt(0).toUpperCase() + tipoFormateado.slice(1);
             return `<div class="stat-row"><div class="stat-row-label">${tipoFormateado} <span>(${count})</span></div><div class="stat-row-value-bar"><div class="bar-container"><div class="bar" style="width: ${widthPercent}%;"></div></div></div></div>`;
         }).join('');
@@ -85,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Renderiza los botones de filtro.
-     * @param {object} datos - Objeto con los datos de la aplicación.
+     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `estadisticas`.
      */
     function renderFiltros(datos) {
         if (!filtrosSection) return;
@@ -101,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Renderiza la lista de normas.
-     * @param {object} datos - Objeto con los datos de la aplicación.
+     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `normas`.
      */
     function renderNormas(datos) {
         if (!normasBody) return;
@@ -183,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Se filtran las normas según la etiqueta seleccionada
         document.querySelectorAll('.norma-card').forEach(card => {
+            // Se obtienen las etiquetas de la tarjeta y se eliminan los elementos vacíos que puedan surgir del split.
             const etiquetasDeLaTarjeta = (card.dataset.etiquetas || '').split(' ').filter(tag => tag);
 
             if (filtro === 'all' || etiquetasDeLaTarjeta.includes(filtro)) {
@@ -197,10 +200,14 @@ document.addEventListener('DOMContentLoaded', () => {
      * Muestra u oculta el botón de scroll según la posición del scroll.
      */
     function handleScroll() { 
-        if (filtrosSection && scrollToTopBtn) { 
-            const sectionOffset = filtrosSection.offsetTop + filtrosSection.offsetHeight; 
-            scrollToTopBtn.classList.toggle('visible', window.scrollY > sectionOffset); 
-        } 
+        if (!filtrosSection || !scrollToTopBtn) return;
+
+        // Se calcula la posición inferior de la sección de filtros.
+        const sectionOffset = filtrosSection.offsetTop + filtrosSection.offsetHeight; 
+
+        // Se muestra el botón si el scroll supera esa posición.
+        const shouldBeVisible = window.scrollY > sectionOffset;
+        scrollToTopBtn.classList.toggle('visible', shouldBeVisible);
     }
     
     /**
