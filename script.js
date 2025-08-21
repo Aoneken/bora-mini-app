@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filtrosSection = document.getElementById('filtros-section');
     const normasBody = document.getElementById('normas-body');
     const scrollToTopBtn = document.getElementById('scroll-to-top');
-    const activeFilterIndicator = document.getElementById('active-filter-indicator');
+    const clearFilterFab = document.getElementById('clear-filter-fab');
 
     // --- RENDERIZADO ---
     // Estas funciones se encargan de generar el HTML y mostrar los datos en la página.
@@ -151,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Se configuran los event listeners
             setupEventListeners();
-            adjustIndicatorPosition();
         } catch (error) {
             console.error("Error en la función main:", error);
             if (normasBody) { normasBody.innerHTML = `<p class="loading-message">No se pudieron cargar las normativas.</p>`; }
@@ -166,38 +165,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupEventListeners() {
         if(filtrosSection) filtrosSection.addEventListener('click', handleFilterClick);
         if(scrollToTopBtn) scrollToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        if(clearFilterFab) clearFilterFab.addEventListener('click', handleClearFilterClick);
         window.addEventListener('scroll', handleScroll, { passive: true });
-        window.addEventListener('resize', adjustIndicatorPosition);
-        if(activeFilterIndicator) activeFilterIndicator.addEventListener('click', handleClearFloatingFilter);
     }
 
     /**
-     * Ajusta la posición del indicador de filtro activo para que quede debajo del header.
+     * Maneja el evento de click en el botón de limpiar filtro flotante.
      */
-    function adjustIndicatorPosition() {
-        const header = document.getElementById('page-header');
-        if (header && activeFilterIndicator) {
-            activeFilterIndicator.style.top = `${header.offsetHeight}px`;
-        }
-    }
-
-    /**
-     * Maneja el evento de click en el botón de limpiar del indicador de filtro flotante.
-     * @param {Event} e - Evento de click.
-     */
-    function handleClearFloatingFilter(e) {
-        const target = e.target.closest('.clear-filter-btn');
-        if (!target) return;
-
+    function handleClearFilterClick() {
         // Limpiar todos los filtros
         document.querySelectorAll('#filtros-section .etiqueta-btn').forEach(btn => btn.classList.remove('active'));
         document.querySelectorAll('.norma-card').forEach(card => {
             card.style.display = '';
         });
 
-        // Ocultar el indicador
-        if (activeFilterIndicator) {
-            activeFilterIndicator.classList.remove('visible');
+        // Ocultar el botón flotante
+        if (clearFilterFab) {
+            clearFilterFab.classList.remove('visible');
         }
 
         // Scroll a la sección de filtros
@@ -228,6 +212,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('#filtros-section .etiqueta-btn').forEach(btn => btn.classList.remove('active'));
         if (filtro !== 'all') {
             target.classList.add('active');
+            if (clearFilterFab) clearFilterFab.classList.add('visible');
+        } else {
+            if (clearFilterFab) clearFilterFab.classList.remove('visible');
         }
 
         // Se filtran las normas según la etiqueta seleccionada
@@ -240,24 +227,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.style.display = 'none'; // Se oculta la tarjeta
             }
         });
-
-        // --- INDICADOR DE FILTRO ACTIVO ---
-        if (activeFilterIndicator) {
-            if (filtro !== 'all') {
-                const etiquetaNombre = target.childNodes[0].nodeValue.trim();
-                activeFilterIndicator.innerHTML = `
-                    <span class="active-filter-button">
-                        Filtro: ${etiquetaNombre}
-                    </span>
-                    <button class="clear-filter-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
-                `;
-                activeFilterIndicator.classList.add('visible');
-            } else {
-                activeFilterIndicator.classList.remove('visible');
-            }
-        }
 
         // Scroll a la línea divisoria, ajustando por el header fijo
         const separator = document.querySelector('.separator');
