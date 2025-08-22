@@ -144,6 +144,18 @@ a:hover {
     color: var(--color-text-secondary);
 }
 
+.stats-link {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.stats-link:hover {
+    color: var(--color-text-primary);
+}
+
 /* Estilo para el enlace de la marca para que no parezca un hipervínculo estándar. */
 .brand-link {
     text-decoration: none;
