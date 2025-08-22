@@ -307,8 +307,8 @@ document.addEventListener('DOMContentLoaded', () => {
             plotOptions: { bar: { horizontal: false, columnWidth: '55%', endingShape: 'rounded' } },
             dataLabels: { enabled: false },
             stroke: { show: true, width: 2, colors: ['transparent'] },
-            xaxis: { categories: Object.keys(stats.desgloseTipos), labels: { style: { colors: '#cbd5e1' } } },
-            yaxis: { title: { text: 'Cantidad de Normas', style: { color: '#cbd5e1' } }, labels: { style: { colors: '#cbd5e1' } } },
+            xaxis: { categories: Object.keys(stats.desgloseTipos), labels: { style: { colors: '#ffffff' } } },
+            yaxis: { title: { text: 'Cantidad de Normas', style: { color: '#ffffff' } }, labels: { style: { colors: '#ffffff' } } },
             fill: { opacity: 1 },
             tooltip: { y: { formatter: (val) => val } },
             title: { text: 'Desglose por Tipo de Norma', align: 'center', style: { color: '#f1f5f9' } }
@@ -336,9 +336,9 @@ document.addEventListener('DOMContentLoaded', () => {
             series: [{ name: 'Cantidad', data: top10.map(item => item[1]) }],
             chart: { type: 'bar', height: 350, toolbar: { show: false } },
             plotOptions: { bar: { horizontal: true } },
-            dataLabels: { enabled: true, style: { colors: ['#333'] } },
-            xaxis: { categories: top10.map(item => item[0]), labels: { style: { colors: '#cbd5e1' } } },
-            yaxis: { labels: { style: { colors: '#cbd5e1' } } },
+            dataLabels: { enabled: true, style: { colors: ['#ffffff'] } },
+            xaxis: { categories: top10.map(item => item[0]), labels: { style: { colors: '#ffffff' } } },
+            yaxis: { labels: { style: { colors: '#ffffff' } } },
             title: { text: 'Top 10 Etiquetas', align: 'center', style: { color: '#f1f5f9' } }
         };
         const chart = new ApexCharts(document.querySelector("#bar-top-etiquetas"), options);
@@ -349,11 +349,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const top15 = Object.entries(stats.desgloseEmisores).sort(([,a],[,b]) => b-a).slice(0,15);
         const options = {
             series: [{ name: 'Cantidad', data: top15.map(item => item[1]) }],
-            chart: { type: 'bar', height: 450, toolbar: { show: false } },
+            chart: { type: 'bar', height: 600, toolbar: { show: false } },
             plotOptions: { bar: { horizontal: true } },
-            dataLabels: { enabled: true, style: { colors: ['#333'] } },
-            xaxis: { categories: top15.map(item => item[0]), labels: { style: { colors: '#cbd5e1' } } },
-            yaxis: { labels: { style: { colors: '#cbd5e1' }, maxHeight: 400 } },
+            dataLabels: { enabled: true, style: { colors: ['#ffffff'] } },
+            xaxis: { categories: top15.map(item => item[0]), labels: { style: { colors: '#ffffff' } } },
+            yaxis: { labels: { style: { colors: '#ffffff' }, offsetX: -10, align: 'left' } },
             title: { text: 'Top 15 Emisores', align: 'center', style: { color: '#f1f5f9' } }
         };
         const chart = new ApexCharts(document.querySelector("#bar-top-emisores"), options);
