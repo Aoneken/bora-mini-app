@@ -101,6 +101,38 @@ main.container {
     color: var(--color-text-primary); /* Set default text color for charts */
 }
 
+/* Estadísticas Section - Title Styling */
+#dashboard-section h2 {
+    text-align: center; /* Centrar Título Principal */
+    margin-bottom: 2rem; /* Añadir Espacio Vertical */
+}
+
+/* KPI Group Card Styling */
+#kpi-group-card {
+    padding: 2rem; /* Aumentar Padding Interno */
+    display: flex; /* Reorganizar KPIs en una Fila */
+    justify-content: space-around; /* Distribute space evenly */
+    align-items: center;
+    gap: 1rem; /* Space between KPI boxes */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+/* Assuming KPI boxes are direct children of #kpi-group-card */
+#kpi-group-card > div {
+    flex: 1; /* Allow items to grow and shrink */
+    min-width: 0; /* Allow shrinking below content size */
+}
+
+/* Media query for smaller screens if flex-wrap is used */
+@media (max-width: 768px) {
+    #kpi-group-card {
+        flex-direction: column; /* Stack KPIs vertically on small screens */
+    }
+    #kpi-group-card > div {
+        width: 100%; /* Full width on small screens */
+    }
+}
+
 /* Specific overrides for ApexCharts text elements */
 .apexcharts-text,
 .apexcharts-xaxis-label,
