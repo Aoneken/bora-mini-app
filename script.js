@@ -214,7 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
      * Configura los event listeners para los filtros y el botón de scroll.
      */
     function setupEventListeners() {
-        if(filtrosSection) filtrosSection.addEventListener('click', handleFilterClick);
+        if(filtrosSection) {
+            filtrosSection.addEventListener('click', handleFilterClick);
+            filtrosSection.addEventListener('click', handleCategoryClick);
+        }
         if(scrollToTopBtn) scrollToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         if(clearFilterFab) clearFilterFab.addEventListener('click', handleClearFilterClick);
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -257,6 +260,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 behavior: 'smooth'
             });
         }
+    }
+
+    /**
+     * Maneja el evento de click en los títulos de las categorías para el acordeón.
+     * @param {Event} e - Evento de click.
+     */
+    function handleCategoryClick(e) {
+        const target = e.target.closest('.categoria-titulo');
+        if (!target) return;
+
+        // Solo en pantallas pequeñas
+        if (window.innerWidth >= 769) return;
+
+        const parent = target.parentElement;
+        parent.classList.toggle('open');
     }
 
     /**
@@ -337,10 +355,10 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function normalizarParaFiltro(texto) {
         return texto.normalize('NFD')
-                     .replace(/[̀-ͯ]/g, "")
+                     .replace(/[\u0300-\u036f]/g, "")
                      .toLowerCase()
                      .replace(/^#+/g, '')
-                     .replace(/[ -]+/g, '-')
+                     .replace(/[\s-]+/g, '-')
                      .replace(/[^a-z0-9-]/g, '')
                      .trim();
     }

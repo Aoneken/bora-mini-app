@@ -1,5 +1,5 @@
 /*
-  Hoja de estilos principal de la aplicación.
+  Hoja de estilos principal de la aplicaci0n.
   Define la apariencia de todos los elementos de la interfaz.
 */
 
@@ -7,13 +7,13 @@
 /* VARIABLES GLOBALES  */
 /* ------------------- */
 /*
-  Define los colores base y la tipografía para mantener una consistencia visual en toda la aplicación.
+  Define los colores base y la tipograf0a para mantener una consistencia visual en toda la aplicaci0n.
   --color-bg: Color de fondo principal.
-  --color-text-primary: Color para el texto más importante.
+  --color-text-primary: Color para el texto m0s importante.
   --color-text-secondary: Color para el texto secundario y descriptivo.
-  --color-accent: Color de acento para resaltar elementos interactivos y títulos.
+  --color-accent: Color de acento para resaltar elementos interactivos y t0tulos.
   --color-link: Color para los enlaces.
-  --color-link-hover: Color para los enlaces cuando el cursor está sobre ellos.
+  --color-link-hover: Color para los enlaces cuando el cursor est0 sobre ellos.
 */
 :root {
     --color-bg: #020617;
@@ -50,7 +50,7 @@ body {
 }
 
 /*
-  Contenedor principal de la aplicación.
+  Contenedor principal de la aplicaci0n.
   - #app-background: Imagen de fondo fija.
   - #app-content: Contenido superpuesto al fondo.
 */
@@ -112,7 +112,7 @@ a:hover {
 /* CABECERA            */
 /* ------------------- */
 /*
-  La cabecera es fija en la parte superior de la página.
+  La cabecera es fija en la parte superior de la p0gina.
 */
 .sticky-header {
     position: sticky;
@@ -188,7 +188,7 @@ main.container {
 /* ------------------- */
 .active-filter-container {
     position: sticky;
-    /* El 'top' se ajustará con JS para quedar debajo del header */
+    /* El 'top' se ajustar0 con JS para quedar debajo del header */
     top: 60px; /* Valor inicial de fallback */
     z-index: 19; /* Menor que el header (20) */
     display: flex;
@@ -230,7 +230,7 @@ main.container {
 }
 
 /* ------------------- */
-/* SÍNTESIS DEL DÍA    */
+/* S0NTESIS DEL D0A    */
 /* ------------------- */
 .sintesis-container {
     padding: 0 1rem;
@@ -255,7 +255,7 @@ main.container {
 }
 
 /* ------------------- */
-/* PANEL DE ESTADÍSTICAS */
+/* PANEL DE ESTAD0STICAS */
 /* ------------------- */
 #stats-panel {
     padding: 0;
@@ -356,7 +356,7 @@ main.container {
     gap: 0.5rem;
 }
 
-/* CAMBIO: Botón "Limpiar" estilo GHOST */
+/* CAMBIO: Bot0n "Limpiar" estilo GHOST */
 .filtros-header .etiqueta-btn[data-filtro="all"] {
     background: transparent;
     color: var(--color-text-secondary);
@@ -373,6 +373,14 @@ main.container {
     display: flex;
     flex-wrap: wrap;
     gap: 0.3rem; /* Reducido */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.categoria-filtro.open .etiquetas-container {
+    max-height: 500px; /* Large enough value */
+    padding-top: 0.5rem;
 }
 
 .etiqueta-btn {
@@ -421,6 +429,41 @@ main.container {
     margin-bottom: 0.5rem;
     padding-bottom: 0.25rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.categoria-titulo::after {
+    content: '+';
+    font-size: 1.5rem;
+    transition: transform 0.3s;
+}
+
+.categoria-filtro.open .categoria-titulo::after {
+    transform: rotate(45deg);
+}
+
+@media (min-width: 769px) {
+    .filtros-body {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .categoria-titulo {
+        cursor: default;
+    }
+
+    .categoria-titulo::after {
+        display: none;
+    }
+
+    .etiquetas-container {
+        max-height: none;
+        overflow: visible;
+    }
 }
 
 /* ------------------- */
@@ -440,7 +483,7 @@ hr.separator {
     display: grid;
     gap: 1.5rem;
     padding: 0 1rem;
-    margin-bottom: 2rem; /* CAMBIO: Añadido padding y margen inferior */
+    margin-bottom: 2rem; /* CAMBIO: A0adido padding y margen inferior */
 }
 
 .norma-card {
@@ -503,7 +546,7 @@ hr.separator {
     border-left: 4px solid var(--color-accent);
 }
 
-/* CAMBIO: Estilo más fuerte para los hashtags */
+/* CAMBIO: Estilo m0s fuerte para los hashtags */
 .norma-etiquetas-container {
     margin-top: 1.25rem;
     font-family: 'IBM Plex Mono', monospace;
@@ -513,7 +556,7 @@ hr.separator {
 }
 
 /* ------------------- */
-/* PIE DE PÁGINA       */
+/* PIE DE P0GINA       */
 /* ------------------- */
 #page-footer {
     text-align: center;
