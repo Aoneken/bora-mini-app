@@ -161,6 +161,10 @@ a:hover {
     color: var(--color-text-secondary);
 }
 
+.brand-link {
+    text-decoration: none;
+}
+
 .brand-name {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 1.5rem;

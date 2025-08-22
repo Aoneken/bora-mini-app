@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderHeader(datos) {
         if (!headerLogoContainer) return;
         const { logoURL } = datos.datosInstitucionales;
-        headerLogoContainer.innerHTML = logoURL ? `<img src="${logoURL}" alt="Logo Orbita" class="logo-img">` : '';
+        headerLogoContainer.innerHTML = logoURL ? `<a href="https://t.me/orbita_ar" target="_blank" rel="noopener noreferrer"><img src="${logoURL}" alt="Logo Orbita" class="logo-img"></a>` : '';
     }
     
     /**
