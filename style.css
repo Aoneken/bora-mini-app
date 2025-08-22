@@ -114,7 +114,6 @@ main.container {
 
 /* Specific overrides for AnyChart text elements (word cloud) */
 #wordcloud-etiquetas text {
-    fill: var(--color-text-primary) !important;
     filter: none !important;
     text-shadow: none !important;
 }
