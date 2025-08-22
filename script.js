@@ -2,7 +2,8 @@
  * @file script.js
  * @description Lógica principal para la mini-aplicación del Boletín Oficial.
  * Este script se encarga de obtener, renderizar y filtrar la información de las normativas,
- * así como de manejar todas las interacciones del usuario.
+ * así como de manejar todas las interacciones del usuario, incluida la navegación y
+ * la visualización del dashboard de estadísticas.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollToTopBtn = document.getElementById('scroll-to-top');
     const clearFilterFab = document.getElementById('clear-filter-fab');
     const activeFilterIndicator = document.getElementById('active-filter-indicator');
+    const navButton = document.getElementById('nav-button');
+    const mainContent = document.getElementById('main-content');
+    const dashboardSection = document.getElementById('dashboard-section');
+
+    let statsData = null; // Almacenar los datos de estadísticas
+    let dashboardRendered = false; // Flag para evitar re-renderizado
 
     // ------------------- //
     // --- RENDERIZADO --- //
@@ -191,6 +198,139 @@ document.addEventListener('DOMContentLoaded', () => {
         normasBody.innerHTML = normasHtml;
     }
 
+    // --- LÓGICA DEL DASHBOARD ---
+    
+    function renderDashboard() {
+        if (dashboardRendered) return;
+
+        renderKPIs(statsData);
+        renderGaugeChart(statsData);
+        renderTreemap(statsData);
+        renderWordCloud(statsData);
+        renderVerticalBarChart(statsData);
+        renderDonutChart(statsData);
+        renderTopEtiquetasChart(statsData);
+        renderTopEmisoresChart(statsData);
+        
+        dashboardRendered = true;
+    }
+
+    const renderKPIs = (stats) => {
+        const kpiOptions = {
+            chart: { type: 'radialBar', sparkline: { enabled: true } },
+            plotOptions: { radialBar: { hollow: { size: '70%' }, dataLabels: { name: { show: false }, value: { fontSize: '1.5rem', offsetY: 5 } } } },
+            fill: { colors: ['#22d3ee'] },
+        };
+
+        const totalNormasData = { series: [100], labels: ['Total Normas'], title: { text: stats.totalNormas, style: { fontSize: '2rem' } } };
+        const kpiTotalNormas = new ApexCharts(document.querySelector("#kpi-total-normas"), { ...kpiOptions, ...totalNormasData });
+        kpiTotalNormas.render();
+
+        const conAnexosData = { series: [Math.round((stats.totalConAnexos / stats.totalNormas) * 100)], labels: ['Con Anexos'], title: { text: stats.totalConAnexos, style: { fontSize: '2rem' } } };
+        const kpiConAnexos = new ApexCharts(document.querySelector("#kpi-con-anexos"), { ...kpiOptions, ...conAnexosData });
+        kpiConAnexos.render();
+
+        const etiquetasUnicasData = { series: [100], labels: ['Etiquetas Únicas'], title: { text: stats.totalEtiquetasUnicas, style: { fontSize: '2rem' } } };
+        const kpiEtiquetasUnicas = new ApexCharts(document.querySelector("#kpi-etiquetas-unicas"), { ...kpiOptions, ...etiquetasUnicasData });
+        kpiEtiquetasUnicas.render();
+    };
+
+    const renderGaugeChart = (stats) => {
+        const options = {
+            chart: { type: 'radialBar', height: 200 },
+            series: [Math.round((stats.totalConAnexos / stats.totalNormas) * 100)],
+            plotOptions: { radialBar: { hollow: { size: '60%' }, dataLabels: { name: { show: true, fontSize: '1rem', offsetY: 20 }, value: { fontSize: '1.5rem', offsetY: -20 } } } },
+            labels: ['Con Anexos'],
+            colors: ['#22d3ee']
+        };
+        const chart = new ApexCharts(document.querySelector("#gauge-anexos"), options);
+        chart.render();
+    };
+
+    const renderTreemap = (stats) => {
+        const seriesData = Object.entries(stats.desgloseCategorias).map(([name, value]) => ({ x: name, y: value }));
+        const options = {
+            series: [{ data: seriesData }],
+            chart: { type: 'treemap', height: 350, toolbar: { show: false } },
+            title: { text: 'Distribución por Categorías', align: 'center', style: { color: '#f1f5f9' } },
+            plotOptions: { treemap: { distributed: true, enableShades: false } },
+            legend: { show: false }
+        };
+        const chart = new ApexCharts(document.querySelector("#treemap-categorias"), options);
+        chart.render();
+    };
+
+    const renderWordCloud = (stats) => {
+        const data = Object.entries(stats.desgloseEtiquetas).map(([word, value]) => ({ x: word, value: value }));
+        anychart.onDocumentReady(() => {
+            const chart = anychart.tagCloud(data);
+            chart.container("wordcloud-etiquetas");
+            chart.title('Nube de Etiquetas');
+            chart.background('transparent');
+            chart.draw();
+        });
+    };
+
+    const renderVerticalBarChart = (stats) => {
+        const options = {
+            series: [{ name: 'Cantidad', data: Object.values(stats.desgloseTipos) }],
+            chart: { type: 'bar', height: 350, toolbar: { show: false } },
+            plotOptions: { bar: { horizontal: false, columnWidth: '55%', endingShape: 'rounded' } },
+            dataLabels: { enabled: false },
+            stroke: { show: true, width: 2, colors: ['transparent'] },
+            xaxis: { categories: Object.keys(stats.desgloseTipos), labels: { style: { colors: '#cbd5e1' } } },
+            yaxis: { title: { text: 'Cantidad de Normas', style: { color: '#cbd5e1' } }, labels: { style: { colors: '#cbd5e1' } } },
+            fill: { opacity: 1 },
+            tooltip: { y: { formatter: (val) => val } },
+            title: { text: 'Desglose por Tipo de Norma', align: 'center', style: { color: '#f1f5f9' } }
+        };
+        const chart = new ApexCharts(document.querySelector("#bar-tipo-norma"), options);
+        chart.render();
+    };
+
+    const renderDonutChart = (stats) => {
+        const options = {
+            series: Object.values(stats.desgloseTipos),
+            labels: Object.keys(stats.desgloseTipos),
+            chart: { type: 'donut', height: 350 },
+            title: { text: 'Distribución por Tipo de Norma', align: 'center', style: { color: '#f1f5f9' } },
+            legend: { position: 'bottom', labels: { colors: '#cbd5e1' } },
+            responsive: [{ breakpoint: 480, options: { chart: { width: 200 }, legend: { position: 'bottom' } } }]
+        };
+        const chart = new ApexCharts(document.querySelector("#donut-tipo-norma"), options);
+        chart.render();
+    };
+
+    const renderTopEtiquetasChart = (stats) => {
+        const top10 = Object.entries(stats.desgloseEtiquetas).sort(([,a],[,b]) => b-a).slice(0,10);
+        const options = {
+            series: [{ name: 'Cantidad', data: top10.map(item => item[1]) }],
+            chart: { type: 'bar', height: 350, toolbar: { show: false } },
+            plotOptions: { bar: { horizontal: true } },
+            dataLabels: { enabled: true, style: { colors: ['#333'] } },
+            xaxis: { categories: top10.map(item => item[0]), labels: { style: { colors: '#cbd5e1' } } },
+            yaxis: { labels: { style: { colors: '#cbd5e1' } } },
+            title: { text: 'Top 10 Etiquetas', align: 'center', style: { color: '#f1f5f9' } }
+        };
+        const chart = new ApexCharts(document.querySelector("#bar-top-etiquetas"), options);
+        chart.render();
+    };
+
+    const renderTopEmisoresChart = (stats) => {
+        const top15 = Object.entries(stats.desgloseEmisores).sort(([,a],[,b]) => b-a).slice(0,15);
+        const options = {
+            series: [{ name: 'Cantidad', data: top15.map(item => item[1]) }],
+            chart: { type: 'bar', height: 450, toolbar: { show: false } },
+            plotOptions: { bar: { horizontal: true } },
+            dataLabels: { enabled: true, style: { colors: ['#333'] } },
+            xaxis: { categories: top15.map(item => item[0]), labels: { style: { colors: '#cbd5e1' } } },
+            yaxis: { labels: { style: { colors: '#cbd5e1' }, maxHeight: 400 } },
+            title: { text: 'Top 15 Emisores', align: 'center', style: { color: '#f1f5f9' } }
+        };
+        const chart = new ApexCharts(document.querySelector("#bar-top-emisores"), options);
+        chart.render();
+    };
+
     // ----------------- //
     // --- LÓGICA MAIN --- //
     // ----------------- //
@@ -203,12 +343,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(DATA_URL);
             if (!response.ok) throw new Error(`Error al cargar los datos: ${response.statusText}`);
             const data = await response.json();
+            statsData = data.estadisticas;
+
             if (!data.fecha) { data.fecha = new Date().toISOString().split('T')[0]; }
 
             renderHeader(data); 
             renderHeaderDate(data); 
             renderIntro(data); 
-            renderStatsPanel(data);
             renderFiltros(data);
             renderNormas(data);
 
@@ -234,6 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if(scrollToTopBtn) scrollToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         if(clearFilterFab) clearFilterFab.addEventListener('click', handleClearFilterClick);
+        if(navButton) navButton.addEventListener('click', toggleDashboard);
         window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', adjustIndicatorPosition);
     }
@@ -356,12 +498,29 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function normalizarParaFiltro(texto) {
         return texto.normalize('NFD')
-                     .replace(/[\u0300-\u036f]/g, "")
+                     .replace(/[̀-ͯ]/g, "")
                      .toLowerCase()
                      .replace(/^#+/g, '')
-                     .replace(/[\s-]+/g, '-')
-                     .replace(/[^a-z0-9-]/g, '')
+                     .replace(/[ ­ -‏‐-‟ - ⁔⁰-₏₠-⃏−∕√∛∞∫∬∭∴∵∼∽≈≌≒≔≠≡≤≥≪≫≺≻≼≽⊂⊃⊄⊅⊆⊇⊈⊉⊕⊗⊥⊿⌀-⏿␀-␿⑀-⑟①-⓿─-╿▀-▟■-◿☀-⛿✀-➿⟀-⟯⟰-⟿⠀-⣿⤀-⥿⦀-⧿⨀-⫿⬀-⯿Ⰰ-ⱟⱠ-⳹⳾-ⷿ⸀-⹿⺀-⻿⼀-⿟⿰-⿿　-〿぀-ゟ゠-ヿ㄀-ㄯ㄰-㆏㆐-㆟ㆠ-ㆿ㇀-㇯ㇰ-ㇿ㈀-㋿㌀-㏿㐀-䶿一-鿿ꀀ-꒏꒐-꓏ꓐ-꓿ꔀ-꘿Ꙁ-ꚟꚠ-꛿꜀-ꜟ꜠-ꜿꝀ-ꞏꞐ-ꞟꞠ-ꞿꟀ-ꟿꠀ-꠯꠰-꠿ꡀ-꡿ꢀ-꣟꣠-ꣿ꤀-꤯ꤰ-꥟ꥠ-꥿ꦀ-꧟ꧠ-꧿ꨀ-꩟ꩠ-ꩿꪀ-꫟ꫠ-꫿꬀-꬏꬐-꬟ꬠ-ꬿꭀ-ꭟꭠ-꭯ꭰ-ꭿꮀ-ꮿꯀ-꯿가-힯ힰ-퟿�-��-􏲀-��-��-��-��-��-��-��-��-�-︀-️︐-︟︠-︯︰-﹏﹐-﹯ﹰ-ﹿﺀ-﻿＀-￯]/g, '-')
+                     .replace(/[-\s]+/g, '-')
                      .trim();
+    }
+
+    function toggleDashboard() {
+        const isDashboardVisible = !dashboardSection.classList.contains('hidden');
+        
+        if (isDashboardVisible) {
+            // Switch to main view
+            mainContent.classList.remove('hidden');
+            dashboardSection.classList.add('hidden');
+            navButton.textContent = 'Estadísticas';
+        } else {
+            // Switch to dashboard view
+            mainContent.classList.add('hidden');
+            dashboardSection.classList.remove('hidden');
+            navButton.textContent = 'Resumen';
+            renderDashboard();
+        }
     }
 
     // --- INICIO DE LA APLICACIÓN ---

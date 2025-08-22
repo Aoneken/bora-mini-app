@@ -13,12 +13,12 @@
 
     <!-- Meta etiquetas para previsualizaciones enriquecidas (Rich Previews) -->
     <meta property="og:title" content="Orbita - Resumen del Boletín Oficial" />
-    <meta property="og:description" content="Un resumen diario de las normativas más importantes del Boletín Oficial de la Repùblica Argentina, analizadas y presentadas por Orbita." />
+    <meta property="og:description" content="Un resumen diario de las normativas más importantes del Boletín Oficial de la República Argentina, analizadas y presentadas por Orbita." />
     <meta property="og:image" content="https://aoneken.notion.site/image/attachment%3Abefc98d2-d5bc-4b44-a6f7-ec51626a0130%3ALOGO_V2_opt.png?table=block&id=237abeb7-0880-80de-ba9d-db7bf2a803a7&spaceId=377abeb7-0880-814a-815e-00035b27454b&width=1420&userId=&cache=v2" />
     <meta property="og:url" content="https://orbita.aoneken.com/" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Orbita - Resumen del Boletín Oficial" />
-    <meta name="twitter:description" content="Un resumen diario de las normativas más importantes del Boletín Oficial de la Repùblica Argentina, analizadas y presentadas por Orbita." />
+    <meta name="twitter:description" content="Un resumen diario de las normativas más importantes del Boletín Oficial de la República Argentina, analizadas y presentadas por Orbita." />
     <meta name="twitter:image" content="https://aoneken.notion.site/image/attachment%3Abefc98d2-d5bc-4b44-a6f7-ec51626a0130%3ALOGO_V2_opt.png?table=block&id=237abeb7-0880-80de-ba9d-db7bf2a803a7&spaceId=377abeb7-0880-814a-815e-00035b27454b&width=1420&userId=&cache=v2" />
 
     <!-- Fuentes de Google Fonts -->
@@ -28,6 +28,9 @@
 
     <!-- Hoja de estilos principal -->
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-tag-cloud.min.js"></script>
 </head>
 <body>
 
@@ -49,14 +52,14 @@
                     <div class="header-top-row">
                         <!-- Fecha del boletín (se inyecta con JS) -->
                         <div id="header-date" class="header-date"></div>
-                        <!-- Enlace al Dashboard de Estadísticas -->
-                        <a href="dashboard.html" class="stats-link">Estadísticas</a>
+                        <!-- Botón de navegación -->
+                        <button id="nav-button" class="stats-link">Estadísticas</button>
                         <!-- Nombre de la marca y enlace a Telegram -->
                         <a href="https://t.me/orbita_ar" target="_blank" rel="noopener noreferrer" class="brand-link">
                             <h1 class="brand-name">Orbita</h1>
                         </a>
                     </div>
-                    <p class="brand-subtitle">Boletín Oficial de la Repùblica Argentina</p>
+                    <p class="brand-subtitle">Boletín Oficial de la República Argentina</p>
                 </div>
             </div>
         </header>
@@ -67,29 +70,52 @@
         <!-- Contenido principal de la página -->
         <main class="container">
             
-            <!-- Sección de introducción con la síntesis del día -->
-            <section id="intro-section">
-                <div class="sintesis-container">
-                    <div id="sintesis-del-dia" class="glass-card sintesis-card">
-                        <h3>Síntesis del Día</h3>
-                        <!-- El texto de la síntesis se carga aquí con JS -->
-                        <p id="sintesis-texto">Cargando...</p>
+            <div id="main-content">
+                <!-- Sección de introducción con la síntesis del día -->
+                <section id="intro-section">
+                    <div class="sintesis-container">
+                        <div id="sintesis-del-dia" class="glass-card sintesis-card">
+                            <h3>Síntesis del Día</h3>
+                            <!-- El texto de la síntesis se carga aquí con JS -->
+                            <p id="sintesis-texto">Cargando...</p>
+                        </div>
                     </div>
+                </section>
+
+                <!-- Panel de filtros por categorías (generado con JS) -->
+                <nav id="filtros-section" class="glass-card">
+                    <!-- Los filtros se cargarán aquí -->
+                </nav>
+
+                <!-- Línea divisoria decorativa -->
+                <hr class="separator">
+
+                <!-- Contenedor para las tarjetas de normas (generadas con JS) -->
+                <div id="normas-body">
+                    <!-- Las normas se cargarán aquí -->
+                </div>
+            </div>
+
+            <section id="dashboard-section" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <!-- KPIs -->
+                    <div class="lg:col-span-1 p-4 bg-slate-800 rounded-lg shadow-lg"><div id="kpi-total-normas"></div></div>
+                    <div class="lg:col-span-1 p-4 bg-slate-800 rounded-lg shadow-lg"><div id="kpi-con-anexos"></div></div>
+                    <div class="lg:col-span-1 p-4 bg-slate-800 rounded-lg shadow-lg"><div id="kpi-etiquetas-unicas"></div></div>
+                    <div class="lg:col-span-1 p-4 bg-slate-800 rounded-lg shadow-lg"><div id="gauge-anexos"></div></div>
+                    <!-- Gráficos Principales -->
+                    <div class="lg:col-span-2 p-4 bg-slate-800 rounded-lg shadow-lg"><div id="treemap-categorias"></div></div>
+                    <div class="lg:col-span-2 p-4 bg-slate-800 rounded-lg shadow-lg"><div id="wordcloud-etiquetas"></div></div>
+
+                    <!-- Gráficos Secundarios -->
+                    <div class="lg:col-span-4 p-4 bg-slate-800 rounded-lg shadow-lg"><div id="bar-tipo-norma"></div></div>
+                    <div class="lg:col-span-2 p-4 bg-slate-800 rounded-lg shadow-lg"><div id="donut-tipo-norma"></div></div>
+                    <div class="lg:col-span-2 p-4 bg-slate-800 rounded-lg shadow-lg"><div id="bar-top-etiquetas"></div></div>
+                    <div class="lg:col-span-4 p-4 bg-slate-800 rounded-lg shadow-lg"><div id="bar-top-emisores"></div></div>
+
                 </div>
             </section>
-
-            <!-- Panel de filtros por categorías (generado con JS) -->
-            <nav id="filtros-section" class="glass-card">
-                <!-- Los filtros se cargarán aquí -->
-            </nav>
-
-            <!-- Línea divisoria decorativa -->
-            <hr class="separator">
-
-            <!-- Contenedor para las tarjetas de normas (generadas con JS) -->
-            <div id="normas-body">
-                <!-- Las normas se cargarán aquí -->
-            </div>
         </main>
 
         <!-- Pie de página -->
