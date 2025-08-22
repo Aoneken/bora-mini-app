@@ -405,6 +405,24 @@ main.container {
     margin-left: 0.25rem; /* Reducido */
 }
 
+.filtros-body {
+    margin-top: 1rem;
+}
+
+.categoria-filtro {
+    margin-bottom: 1rem;
+}
+
+.categoria-titulo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* ------------------- */
 /* SEPARADOR           */
 /* ------------------- */

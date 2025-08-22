@@ -106,13 +106,50 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderFiltros(datos) {
         if (!filtrosSection) return;
         const { desgloseEtiquetas } = datos.estadisticas;
-        const etiquetasOrdenadas = Object.keys(desgloseEtiquetas).sort((a, b) => desgloseEtiquetas[b] - desgloseEtiquetas[a]);
-        const botones = etiquetasOrdenadas.map(etiqueta => {
-            const filtro = normalizarParaFiltro(etiqueta);
-            const cantidad = desgloseEtiquetas[etiqueta];
-            return `<button class="etiqueta-btn" data-filtro="${filtro}">${etiqueta} <span class="etiqueta-count">${cantidad}</span></button>`;
-        }).join('');
-        filtrosSection.innerHTML = `<div class="filtros-header"><h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg> Filtros</h2><button class="etiqueta-btn" data-filtro="all">Limpiar</button></div><div class="etiquetas-container">${botones}</div>`;
+
+        const categoriasDeFiltros = [
+            { nombre: "Social", etiquetas: ["#Salud", "#Educacion", "#Empleo", "#SeguridadSocial", "#DesarrolloSocial", "#ViviendaHabitat", "#Cultura"] },
+            { nombre: "Conocimiento", etiquetas: ["#CienciaYTecnica", "#Comunicaciones"] },
+            { nombre: "Estado y Justicia", etiquetas: ["#JusticiaDDHH", "#Seguridad", "#Defensa", "#RelacionesExteriores"] },
+            { nombre: "Infraestructura", etiquetas: ["#ObrasPublicas", "#TransporteAereo", "#TransporteTerrestre", "#TransporteMaritimo", "#Ambiente"] },
+            { nombre: "Energía", etiquetas: ["#Hidrocarburos", "#Electricidad", "#EnergiaNuclear", "#EnergiasRenovables", "#Biocombustibles", "#Litio"] },
+            { nombre: "Producción", etiquetas: ["#Industria", "#PyMEs", "#Agroindustria", "#Mineria", "#Turismo"] },
+            { nombre: "Comercio", etiquetas: ["#ComercioInterior", "#ComercioExterior"] },
+            { nombre: "Hacienda", etiquetas: ["#Impuestos", "#Presupuesto", "#DeudaPublica"] },
+            { nombre: "Sector Público", etiquetas: ["#Designaciones", "#Renuncias", "#Ascensos", "#BienesDelEstado"] }
+        ];
+
+        let filtrosHtml = '';
+        categoriasDeFiltros.forEach(categoria => {
+            const etiquetasDeCategoria = categoria.etiquetas.map(etiquetaConHashtag => {
+                const etiqueta = etiquetaConHashtag.replace('#', '');
+                if (desgloseEtiquetas[etiqueta]) {
+                    const filtro = normalizarParaFiltro(etiqueta);
+                    const cantidad = desgloseEtiquetas[etiqueta];
+                    const etiquetaFormateada = etiqueta.replace(/([A-Z])/g, ' $1').trim();
+                    return `<button class="etiqueta-btn" data-filtro="${filtro}">${etiquetaFormateada} <span class="etiqueta-count">${cantidad}</span></button>`;
+                }
+                return '';
+            }).join('');
+
+            if (etiquetasDeCategoria) {
+                filtrosHtml += `<div class="categoria-filtro">
+`;
+                filtrosHtml += `<h4 class="categoria-titulo">${categoria.nombre}</h4>`;
+                filtrosHtml += `<div class="etiquetas-container">${etiquetasDeCategoria}</div>`;
+                filtrosHtml += `</div>`;
+            }
+        });
+
+        filtrosSection.innerHTML = `
+            <div class="filtros-header">
+                <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg> Filtros</h2>
+                <button class="etiqueta-btn" data-filtro="all">Limpiar</button>
+            </div>
+            <div class="filtros-body">
+                ${filtrosHtml}
+            </div>
+        `;
     }
 
     /**
@@ -300,10 +337,10 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function normalizarParaFiltro(texto) {
         return texto.normalize('NFD')
-                     .replace(/[\u0300-\u036f]/g, "")
+                     .replace(/[̀-ͯ]/g, "")
                      .toLowerCase()
                      .replace(/^#+/g, '')
-                     .replace(/[\s-]+/g, '-')
+                     .replace(/[ -]+/g, '-')
                      .replace(/[^a-z0-9-]/g, '')
                      .trim();
     }
