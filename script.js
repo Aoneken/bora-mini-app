@@ -210,15 +210,16 @@ document.addEventListener('DOMContentLoaded', () => {
         let kpisHtml = '';
         kpis.forEach(kpi => {
             kpisHtml += `
-                <div class="kpi-item">
-                    <div class="kpi-value">${kpi.value}</div>
-                    <div class="kpi-title">${kpi.title}</div>
+                <div class="kpi-item" style="display: flex; flex-direction: column; align-items: center; padding: 10px; background-color: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                    <div class="kpi-value" style="font-size: 2em; font-weight: bold; color: #22d3ee;">${kpi.value}</div>
+                    <div class="kpi-title" style="font-size: 0.9em; color: #cbd5e1; text-align: center;">${kpi.title}</div>
                 </div>
             `;
         });
 
         kpiGroupCard.innerHTML = `
-            <div class="kpi-group-container">
+            <h2 style="color: #f1f5f9; text-align: center; margin-bottom: 20px;">Resumen de Normas</h2>
+            <div class="kpi-group-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; justify-content: center;">
                 ${kpisHtml}
             </div>
         `;
@@ -242,6 +243,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const renderGaugeChart = (stats) => {
+        const gaugeContainer = document.querySelector("#gauge-anexos");
+        if (!gaugeContainer) return;
+        gaugeContainer.innerHTML = '<h2 style="color: #f1f5f9; text-align: center; margin-bottom: 20px;">Porcentaje de Normas con Anexos</h2><div id="gauge-chart-inner"></div>';
         const options = {
             chart: { type: 'radialBar', height: 200 },
             series: [Math.round((stats.totalConAnexos / stats.totalNormas) * 100)],
@@ -249,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
             labels: ['Con Anexos'],
             colors: ['#22d3ee']
         };
-        const chart = new ApexCharts(document.querySelector("#gauge-anexos"), options);
+        const chart = new ApexCharts(document.querySelector("#gauge-chart-inner"), options);
         chart.render();
     };
 
@@ -259,7 +263,23 @@ document.addEventListener('DOMContentLoaded', () => {
             series: [{ data: seriesData }],
             chart: { type: 'treemap', height: 350, toolbar: { show: false } },
             title: { text: 'Distribución por Categorías', align: 'center', style: { color: '#f1f5f9' } },
-            plotOptions: { treemap: { distributed: true, enableShades: false } },
+            plotOptions: {
+                treemap: {
+                    distributed: true,
+                    enableShades: false,
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function(text, op) {
+                            return [text, op.value]
+                        },
+                        offsetY: 4,
+                        style: {
+                            fontSize: '15px',
+                            colors: ['#fff']
+                        }
+                    }
+                }
+            },
             legend: { show: false }
         };
         const chart = new ApexCharts(document.querySelector("#treemap-categorias"), options);
@@ -267,11 +287,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderWordCloud = (stats) => {
+        const wordCloudContainer = document.querySelector("#wordcloud-etiquetas");
+        if (!wordCloudContainer) return;
+        wordCloudContainer.innerHTML = '<h2 style="color: #f1f5f9; text-align: center; margin-bottom: 20px;">Nube de Etiquetas</h2><div id="wordcloud-chart-inner" style="height: calc(100% - 40px);"></div>';
         const data = Object.entries(stats.desgloseEtiquetas).map(([word, value]) => ({ x: word, value: value }));
         anychart.onDocumentReady(() => {
             const chart = anychart.tagCloud(data);
-            chart.container("wordcloud-etiquetas");
-            chart.title('Nube de Etiquetas');
+            chart.container("wordcloud-chart-inner");
+            chart.title(false); // Disable AnyChart's internal title as we added our own H2
             chart.background('transparent');
             chart.draw();
         });
