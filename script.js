@@ -385,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             yaxis: { title: { text: 'Cantidad de Normas', style: { color: '#ffffff' } }, labels: { style: { colors: '#ffffff' } } },
             fill: { opacity: 1 },
-            tooltip: { y: { formatter: (val) => val } },
+            tooltip: { y: { } },
             title: { text: 'Desglose por Tipo de Norma', align: 'center', style: { color: '#f1f5f9' } }
         };
         const chart = new ApexCharts(document.querySelector("#bar-tipo-norma"), options);
