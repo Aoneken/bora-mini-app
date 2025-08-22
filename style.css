@@ -177,10 +177,10 @@ main.container {
     width: auto;
     object-fit: contain;
     /* Glassmorphism styles for logo */
-    background: rgba(30, 41, 59, 0.65);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
     padding: 0.5rem; /* Add some padding around the logo */
