@@ -479,9 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /**
-     * Muestra u oculta el botón de "volver arriba" según la posición del scroll.
-     */
     function handleScroll() { 
         if (!filtrosSection || !scrollToTopBtn) return;
 
@@ -491,17 +488,12 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollToTopBtn.classList.toggle('visible', shouldBeVisible);
     }
     
-    /**
-     * Normaliza un texto para usarlo como valor de filtro (minúsculas, sin acentos, etc.).
-     * @param {string} texto - Texto a normalizar.
-     * @returns {string} - Texto normalizado.
-     */
     function normalizarParaFiltro(texto) {
         return texto.normalize('NFD')
-                     .replace(/[\u0300-\u036f]/g, "")
+                     .replace(/[̀-ͯ]/g, "")
                      .toLowerCase()
                      .replace(/^#+/g, '')
-                     .replace(/[\s-]+/g, '-')
+                     .replace(/[ ßà-ÿက-῿ -⿿　-㿿︀-️︰-﹏﹐-﹯＀-￿]/g, '-')
                      .replace(/[^a-z0-9-]/g, '')
                      .trim();
     }
