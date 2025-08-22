@@ -42,7 +42,19 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function renderHeaderDate(datos) {
         if (headerDate) {
-            const fechaOriginal = datos.fecha || new Date().toISOString().split('T')[0];
+            let fechaOriginal = datos.fecha;
+            if (!fechaOriginal) {
+                // Si no hay fecha, usar la de Buenos Aires.
+                const now = new Date();
+                const formatter = new Intl.DateTimeFormat('en-CA', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'America/Argentina/Buenos_Aires'
+                });
+                fechaOriginal = formatter.format(now);
+            }
+
             const [year, month, day] = fechaOriginal.split('-');
             const readableDate = new Date(year, month - 1, day).toLocaleDateString('es-AR', {
                 day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'
