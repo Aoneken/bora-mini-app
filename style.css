@@ -111,15 +111,15 @@ main.container {
 #kpi-group-card {
     padding: 2rem; /* Aumentar Padding Interno */
     display: flex; /* Reorganizar KPIs en una Fila */
-    justify-content: space-around; /* Distribute space evenly */
-    align-items: center;
-    gap: 1rem; /* Space between KPI boxes */
+    flex-direction: row; /* Asegura la dirección horizontal */
+    justify-content: space-between; /* O space-around para distribuir el espacio */
+    gap: 1rem; /* Añade un espacio consistente entre los cuadros */
     flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 /* Assuming KPI boxes are direct children of #kpi-group-card */
 #kpi-group-card > div {
-    flex: 1; /* Allow items to grow and shrink */
+    flex: 1 1 calc(33.33% - 1rem); /* Allow items to grow and shrink, with a base width for 3 items */
     min-width: 0; /* Allow shrinking below content size */
 }
 
@@ -130,6 +130,7 @@ main.container {
     }
     #kpi-group-card > div {
         width: 100%; /* Full width on small screens */
+        flex-basis: auto; /* Reset flex-basis for column layout */
     }
 }
 
