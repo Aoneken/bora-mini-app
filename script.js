@@ -258,7 +258,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderTreemap = (stats) => {
-        const seriesData = Object.entries(stats.desgloseCategorias).map(([name, value]) => ({ x: name, y: value }));
+        const seriesData = Object.entries(stats.desgloseCategorias || {}).map(([name, value]) => ({ x: name, y: value }));
+
+    if (seriesData.length === 0) {
+        const treemapContainer = document.querySelector("#treemap-categorias");
+        if (treemapContainer) {
+            treemapContainer.innerHTML = '<p style="color: #cbd5e1; text-align: center; padding-top: 50px;">No hay datos para el Treemap de Categorías.</p>';
+        }
+        return;
+    }
         const options = {
             series: [{ data: seriesData }],
             chart: { type: 'treemap', height: 350, toolbar: { show: false } },
