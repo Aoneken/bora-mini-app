@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 filtrosHtml += `<div class="categoria-filtro">
 `;
                 filtrosHtml += `<h4 class="categoria-titulo">${categoria.nombre}</h4>`;
-                filtrosHtml += `<div class="etiquetas-container">${etiquetasDeCategoria}</div>`;
+                filtrosHtml += `<div class="etiquetas-container-wrapper"><div class="etiquetas-container">${etiquetasDeCategoria}</div></div>`;
                 filtrosHtml += `</div>`;
             }
         });
@@ -351,10 +351,10 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function normalizarParaFiltro(texto) {
         return texto.normalize('NFD')
-                     .replace(/[̀-ͯ]/g, "")
+                     .replace(/[\u0300-\u036f]/g, "")
                      .toLowerCase()
                      .replace(/^#+/g, '')
-                     .replace(/[ -]+/g, '-')
+                     .replace(/[\s-]+/g, '-')
                      .replace(/[^a-z0-9-]/g, '')
                      .trim();
     }

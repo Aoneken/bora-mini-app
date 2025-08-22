@@ -353,17 +353,26 @@ main.container {
 }
 
 /* Estilos para el acordeón en móviles */
+.etiquetas-container-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-out;
+}
+
+.categoria-filtro.open .etiquetas-container-wrapper {
+    grid-template-rows: 1fr;
+}
+
 .etiquetas-container {
+    overflow: hidden;
     display: flex;
     flex-wrap: wrap;
     gap: 0.3rem;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    padding-top: 0;
+    transition: padding-top 0.3s ease-out;
 }
 
 .categoria-filtro.open .etiquetas-container {
-    max-height: 500px; /* Valor suficientemente grande para mostrar todas las etiquetas */
     padding-top: 0.5rem;
 }
 
@@ -446,9 +455,13 @@ main.container {
         display: none;
     }
 
+    .etiquetas-container-wrapper {
+        grid-template-rows: 1fr; /* Siempre abierto en escritorio */
+    }
+
     .etiquetas-container {
-        max-height: none;
         overflow: visible;
+        padding-top: 0.5rem;
     }
 }
 
