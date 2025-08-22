@@ -670,3 +670,25 @@ hr.separator {
 .treemap-card {
     padding: 2rem; /* Override default padding for treemap card */
 }
+
+/* ApexCharts Tooltip Styling */
+.apexcharts-tooltip {
+    background-color: #FFFFFF1A !important; /* Light gray with transparency */
+    color: #FFFFFF !important; /* White text */
+    padding: 1rem !important; /* Internal padding */
+    border-radius: 8px !important; /* Rounded borders */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important; /* Match glass-card border */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25) !important; /* Subtle shadow */
+}
+
+/* Ensure tooltip text is legible */
+.apexcharts-tooltip-text {
+    color: #FFFFFF !important;
+}
+
+/* Specific styling for tooltip title/category */
+.apexcharts-tooltip-title {
+    font-weight: bold !important;
+    color: #FFFFFF !important;
+    margin-bottom: 0.5rem !important;
+}

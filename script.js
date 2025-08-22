@@ -280,7 +280,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             },
-            legend: { show: false }
+            legend: { show: false },
+            tooltip: {
+                y: {
+                    formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+                        return w.globals.labels[dataPointIndex] + ": " + value
+                    }
+                }
+            }
         };
         const chart = new ApexCharts(document.querySelector("#treemap-categorias"), options);
         chart.render();
