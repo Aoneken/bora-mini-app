@@ -426,9 +426,35 @@ hr.separator {
 }
 
 .norma-card {
+    position: relative;
     padding: 1.25rem 1.5rem;
     overflow: hidden;
     transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.norma-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.norma-action-btn.norma-bo-btn {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--color-accent);
+    color: #020717;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.norma-action-btn.norma-bo-btn:hover {
+    transform: scale(1.05);
 }
 
 .norma-card.hidden {
