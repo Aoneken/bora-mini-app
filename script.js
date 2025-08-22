@@ -125,6 +125,11 @@ document.addEventListener('DOMContentLoaded', () => {
             { nombre: "Sector Público", etiquetas: ["#Designaciones", "#Renuncias", "#Ascensos", "#BienesDelEstado"] }
         ];
 
+        const specialFormatting = {
+            "PyMEs": "PyMEs",
+            "JusticiaDDHH": "Justicia DDHH"
+        };
+
         let filtrosHtml = '';
         categoriasDeFiltros.forEach(categoria => {
             const etiquetasDeCategoria = categoria.etiquetas.map(etiquetaConHashtag => {
@@ -132,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (desgloseEtiquetas[etiqueta]) {
                     const filtro = normalizarParaFiltro(etiqueta);
                     const cantidad = desgloseEtiquetas[etiqueta];
-                    const etiquetaFormateada = etiqueta.replace(/([A-Z])/g, ' $1').trim();
+                    const etiquetaFormateada = specialFormatting[etiqueta] || etiqueta.replace(/([A-Z])/g, ' $1').trim();
                     return `<button class="etiqueta-btn" data-filtro="${filtro}">${etiquetaFormateada} <span class="etiqueta-count">${cantidad}</span></button>`;
                 }
                 return '';
@@ -351,10 +356,11 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function normalizarParaFiltro(texto) {
         return texto.normalize('NFD')
-                     .replace(/[\u0300-\u036f]/g, "")
+                     .replace(/[̀-ͯ]/g, "")
                      .toLowerCase()
                      .replace(/^#+/g, '')
-                     .replace(/[\s-]+/g, '-')
+                     .replace(/[ ​‌‍⁠⁡⁢⁣⁤﻿]/g, '')
+                     .replace(/[  ​‌‍⁠⁡⁢⁣⁤﻿]+/g, '-')
                      .replace(/[^a-z0-9-]/g, '')
                      .trim();
     }

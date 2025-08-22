@@ -411,7 +411,7 @@ main.container {
 }
 
 .categoria-filtro {
-    margin-bottom: 0.5rem; /* Reducido */
+    margin-bottom: 0.25rem; /* Reducido aún más */
 }
 
 .categoria-titulo {
@@ -419,8 +419,8 @@ main.container {
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--color-accent);
-    margin-bottom: 0.25rem; /* Reducido */
-    padding-bottom: 0.1rem; /* Reducido */
+    margin-bottom: 0.25rem;
+    padding-bottom: 0.1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
     display: flex;
