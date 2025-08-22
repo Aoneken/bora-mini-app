@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /** Referencias a los elementos del DOM para evitar consultas repetitivas. */
     const headerLogoContainer = document.querySelector('.header-logo');
+    const headerDate = document.getElementById('header-date');
     const sintesisTexto = document.getElementById('sintesis-texto');
     const statsPanel = document.getElementById('stats-panel');
     const filtrosSection = document.getElementById('filtros-section');
