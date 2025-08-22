@@ -49,6 +49,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     /**
+     * Renderiza la fecha en la cabecera.
+     * Si no se provee una fecha, utiliza la fecha actual de Buenos Aires como fallback.
+     * @param {object} datos - Objeto con los datos de la aplicación.
+     */
+    function renderHeaderDate(datos) {
+        if (headerDate) {
+            let fechaOriginal = datos.fecha;
+            if (!fechaOriginal) {
+                const now = new Date();
+                const formatter = new Intl.DateTimeFormat('en-CA', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'America/Argentina/Buenos_Aires'
+                });
+                fechaOriginal = formatter.format(now);
+            }
+
+            const [year, month, day] = fechaOriginal.split('-');
+            const readableDate = new Date(year, month - 1, day).toLocaleDateString('es-AR', {
+                day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'
+            }).replace(' de ', ' ');
+            headerDate.textContent = readableDate;
+        }
+    }
+
+    /**
      * Renderiza la síntesis del día en la tarjeta de introducción.
      * @param {object} datos - Objeto con los datos de la aplicación.
      */
@@ -170,12 +197,39 @@ document.addEventListener('DOMContentLoaded', () => {
         normasBody.innerHTML = normasHtml;
     }
 
+    const renderGroupedKPIs = (stats) => {
+        const kpiGroupCard = document.getElementById('kpi-group-card');
+        if (!kpiGroupCard) return;
+
+        const kpis = [
+            { id: 'total-normas', title: 'Total Normas', value: stats.totalNormas },
+            { id: 'con-anexos', title: 'Normas con Anexos', value: stats.totalConAnexos },
+            { id: 'etiquetas-unicas', title: 'Etiquetas Únicas', value: stats.totalEtiquetasUnicas }
+        ];
+
+        let kpisHtml = '';
+        kpis.forEach(kpi => {
+            kpisHtml += `
+                <div class="kpi-item">
+                    <div class="kpi-value">${kpi.value}</div>
+                    <div class="kpi-title">${kpi.title}</div>
+                </div>
+            `;
+        });
+
+        kpiGroupCard.innerHTML = `
+            <div class="kpi-group-container">
+                ${kpisHtml}
+            </div>
+        `;
+    };
+
     // --- LÓGICA DEL DASHBOARD ---
     
     function renderDashboard() {
         if (dashboardRendered) return;
 
-        renderKPIs(statsData);
+        renderGroupedKPIs(statsData); // Call the new grouped KPI function
         renderGaugeChart(statsData);
         renderTreemap(statsData);
         renderWordCloud(statsData);
@@ -186,26 +240,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         dashboardRendered = true;
     }
-
-    const renderKPIs = (stats) => {
-        const kpiOptions = {
-            chart: { type: 'radialBar', sparkline: { enabled: true } },
-            plotOptions: { radialBar: { hollow: { size: '70%' }, dataLabels: { name: { show: false }, value: { fontSize: '1.5rem', offsetY: 5 } } } },
-            fill: { colors: ['#22d3ee'] },
-        };
-
-        const totalNormasData = { series: [100], labels: ['Total Normas'], title: { text: stats.totalNormas, style: { fontSize: '2rem' } } };
-        const kpiTotalNormas = new ApexCharts(document.querySelector("#kpi-total-normas"), { ...kpiOptions, ...totalNormasData });
-        kpiTotalNormas.render();
-
-        const conAnexosData = { series: [Math.round((stats.totalConAnexos / stats.totalNormas) * 100)], labels: ['Con Anexos'], title: { text: stats.totalConAnexos, style: { fontSize: '2rem' } } };
-        const kpiConAnexos = new ApexCharts(document.querySelector("#kpi-con-anexos"), { ...kpiOptions, ...conAnexosData });
-        kpiConAnexos.render();
-
-        const etiquetasUnicasData = { series: [100], labels: ['Etiquetas Únicas'], title: { text: stats.totalEtiquetasUnicas, style: { fontSize: '2rem' } } };
-        const kpiEtiquetasUnicas = new ApexCharts(document.querySelector("#kpi-etiquetas-unicas"), { ...kpiOptions, ...etiquetasUnicasData });
-        kpiEtiquetasUnicas.render();
-    };
 
     const renderGaugeChart = (stats) => {
         const options = {
@@ -320,6 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!data.fecha) { data.fecha = new Date().toISOString().split('T')[0]; }
 
             renderHeader(data); 
+            renderHeaderDate(data); 
             renderIntro(data); 
             renderFiltros(data);
             renderNormas(data);

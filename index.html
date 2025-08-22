@@ -43,17 +43,22 @@
         <!-- Cabecera fija (sticky) -->
         <header id="page-header" class="sticky-header">
             <div class="container header-content">
-                <div class="header-main-row">
-                    <div class="header-logo">
-                        <!-- El logo de Orbita se cargará aquí -->
-                    </div>
-                    <a href="https://t.me/orbita_ar" target="_blank" rel="noopener noreferrer" class="brand-link">
-                        <h1 class="brand-name">Orbita</h1>
+                <div class="header-left-column">
+                    <a href="#" class="logo-link">
+                        <img src="https://aoneken.notion.site/image/attachment%3Abefc98d2-d5bc-4b44-a6f7-ec51626a0130%3ALOGO_V2_opt.png?table=block&id=237abeb7-0880-80de-ba9d-db7bf2a803a7&spaceId=377abeb7-0880-814a-815e-00035b27454b&width=1420&userId=&cache=v2" alt="Orbita Logo" class="orbita-logo">
                     </a>
                 </div>
-                <div class="header-secondary-row">
-                    <button id="nav-button" class="nav-button">Estadísticas</button>
-                    <p class="brand-subtitle">Boletín Oficial Ar 🇦🇷</p>
+                <div class="header-right-column">
+                    <div class="header-right-row-1">
+                        <div id="header-date" class="header-date"></div>
+                        <a href="https://t.me/orbita_ar" target="_blank" rel="noopener noreferrer" class="brand-link">
+                            <h1 class="brand-name">Orbita</h1>
+                        </a>
+                    </div>
+                    <div class="header-right-row-2">
+                        <button id="nav-button" class="nav-button">Estadísticas</button>
+                        <p class="brand-subtitle">Boletín Oficial 🇦🇷</p>
+                    </div>
                 </div>
             </div>
         </header>
@@ -64,7 +69,7 @@
         <!-- Contenido principal de la página -->
         <main class="container">
             
-            <div id="main-content">
+            <div id="main-content" class="scroll-target">
                 <!-- Sección de introducción con la síntesis del día -->
                 <section id="intro-section">
                     <div class="sintesis-container">
@@ -90,14 +95,12 @@
                 </div>
             </div>
 
-            <section id="dashboard-section" class="hidden glass-card">
+            <section id="dashboard-section" class="hidden glass-card scroll-target">
                 <h2 class="text-2xl font-bold text-cyan-400 text-center mb-4">Estadísticas</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
                     <!-- KPIs -->
-                    <div class="lg:col-span-1 glass-card p-4"><div id="kpi-total-normas"></div></div>
-                    <div class="lg:col-span-1 glass-card p-4"><div id="kpi-con-anexos"></div></div>
-                    <div class="lg:col-span-1 glass-card p-4"><div id="kpi-etiquetas-unicas"></div></div>
+                    <div id="kpi-group-card" class="lg:col-span-1 glass-card p-4"></div>
                     <div class="lg:col-span-1 glass-card p-4"><div id="gauge-anexos"></div></div>
                     <!-- Gráficos Principales -->
                     <div class="lg:col-span-2 glass-card p-4"><div id="treemap-categorias"></div></div>

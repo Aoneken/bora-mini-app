@@ -141,13 +141,37 @@ main.container {
 
 .header-content {
     display: flex;
-    flex-direction: column; /* Stack rows vertically */
-    gap: 0.5rem; /* Space between rows */
+    flex-direction: row; /* Arrange columns horizontally */
+    justify-content: space-between; /* Space between left and right columns */
+    align-items: center; /* Vertically center columns */
+    gap: 1rem; /* Space between columns */
     padding: 0.5rem 1rem;
 }
 
-.header-main-row,
-.header-secondary-row {
+.header-left-column {
+    flex-shrink: 0; /* Prevent logo column from shrinking */
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+}
+
+.orbita-logo {
+    height: 40px; /* Adjust as needed */
+    width: auto;
+    object-fit: contain;
+}
+
+.header-right-column {
+    display: flex;
+    flex-direction: column; /* Stack rows vertically */
+    flex-grow: 1; /* Allow right column to take available space */
+    gap: 0.25rem; /* Space between rows in right column */
+}
+
+.header-right-row-1,
+.header-right-row-2 {
     display: flex;
     justify-content: space-between; /* Align items to ends */
     align-items: center; /* Vertically center items */
@@ -163,6 +187,14 @@ main.container {
     width: auto;
     object-fit: contain;
     border-radius: 8px;
+}
+
+/* Re-introduce header-date styling */
+.header-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
 }
 
 .nav-button {
@@ -184,7 +216,7 @@ main.container {
 }
 
 /* Ensure the nav-button is aligned left in the secondary row */
-.header-secondary-row .nav-button {
+.header-right-row-2 .nav-button {
     margin-right: auto; /* Push button to the left */
 }
 
@@ -204,7 +236,6 @@ main.container {
 .brand-subtitle {
     font-size: 0.75rem;
     color: var(--color-text-secondary);
-    /* margin-top: 0.1rem; - This might not be needed with flex alignment */
 }
 
 main.container {
@@ -578,4 +609,8 @@ hr.separator {
     text-align: center;
     padding: 2rem;
     font-style: italic;
+}
+
+.scroll-target {
+    scroll-margin-top: 60px; /* Adjust this value based on actual header height */
 }
