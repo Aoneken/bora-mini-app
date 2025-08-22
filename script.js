@@ -284,7 +284,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tooltip: {
                 y: {
                     formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
-                        return w.globals.labels[dataPointIndex] + ": " + value
+                        const categoryName = w.globals.series[seriesIndex].data[dataPointIndex].x;
+                        return categoryName + ": " + value;
                     }
                 }
             }
