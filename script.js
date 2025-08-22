@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderHeader(data); 
             renderHeaderDate(data); 
             renderIntro(data); 
-            renderStatsPanel(data); 
+            renderStatsPanel(data);
             renderFiltros(data);
             renderNormas(data);
 
@@ -356,11 +356,10 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function normalizarParaFiltro(texto) {
         return texto.normalize('NFD')
-                     .replace(/[̀-ͯ]/g, "")
+                     .replace(/[\u0300-\u036f]/g, "")
                      .toLowerCase()
                      .replace(/^#+/g, '')
-                     .replace(/[ ​‌‍⁠⁡⁢⁣⁤﻿]/g, '')
-                     .replace(/[  ​‌‍⁠⁡⁢⁣⁤﻿]+/g, '-')
+                     .replace(/[\s-]+/g, '-')
                      .replace(/[^a-z0-9-]/g, '')
                      .trim();
     }
