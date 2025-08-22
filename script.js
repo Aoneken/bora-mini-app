@@ -307,7 +307,14 @@ document.addEventListener('DOMContentLoaded', () => {
             plotOptions: { bar: { horizontal: false, columnWidth: '55%', endingShape: 'rounded' } },
             dataLabels: { enabled: false },
             stroke: { show: true, width: 2, colors: ['transparent'] },
-            xaxis: { categories: Object.keys(stats.desgloseTipos), labels: { style: { colors: '#ffffff' } } },
+            xaxis: {
+                categories: Object.keys(stats.desgloseTipos),
+                labels: {
+                    style: { colors: '#ffffff' },
+                    rotate: -45,
+                    offsetY: 5
+                }
+            },
             yaxis: { title: { text: 'Cantidad de Normas', style: { color: '#ffffff' } }, labels: { style: { colors: '#ffffff' } } },
             fill: { opacity: 1 },
             tooltip: { y: { formatter: (val) => val } },
@@ -323,7 +330,15 @@ document.addEventListener('DOMContentLoaded', () => {
             labels: Object.keys(stats.desgloseTipos),
             chart: { type: 'donut', height: 350 },
             title: { text: 'Distribución por Tipo de Norma', align: 'center', style: { color: '#f1f5f9' } },
-            legend: { position: 'bottom', labels: { colors: '#cbd5e1' } },
+            legend: {
+                position: 'bottom',
+                labels: { colors: '#ffffff' },
+                itemMargin: { horizontal: 5, vertical: 5 },
+                markers: { width: 12, height: 12, strokeWidth: 0, radius: 12 },
+                formatter: function(val, opts) {
+                    return val;
+                }
+            },
             responsive: [{ breakpoint: 480, options: { chart: { width: 200 }, legend: { position: 'bottom' } } }]
         };
         const chart = new ApexCharts(document.querySelector("#donut-tipo-norma"), options);
