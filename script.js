@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /** Referencias a los elementos del DOM para evitar consultas repetitivas. */
     const headerLogoContainer = document.querySelector('.header-logo');
-    const headerDate = document.getElementById('header-date');
     const sintesisTexto = document.getElementById('sintesis-texto');
     const statsPanel = document.getElementById('stats-panel');
     const filtrosSection = document.getElementById('filtros-section');
@@ -49,33 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         headerLogoContainer.innerHTML = logoURL ? `<a href="https://t.me/orbita_ar" target="_blank" rel="noopener noreferrer"><img src="${logoURL}" alt="Logo Orbita" class="logo-img"></a>` : '';
     }
     
-    /**
-     * Renderiza la fecha en la cabecera.
-     * Si no se provee una fecha, utiliza la fecha actual de Buenos Aires como fallback.
-     * @param {object} datos - Objeto con los datos de la aplicación.
-     */
-    function renderHeaderDate(datos) {
-        if (headerDate) {
-            let fechaOriginal = datos.fecha;
-            if (!fechaOriginal) {
-                const now = new Date();
-                const formatter = new Intl.DateTimeFormat('en-CA', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    timeZone: 'America/Argentina/Buenos_Aires'
-                });
-                fechaOriginal = formatter.format(now);
-            }
-
-            const [year, month, day] = fechaOriginal.split('-');
-            const readableDate = new Date(year, month - 1, day).toLocaleDateString('es-AR', {
-                day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'
-            }).replace(' de ', ' ');
-            headerDate.textContent = readableDate;
-        }
-    }
-
     /**
      * Renderiza la síntesis del día en la tarjeta de introducción.
      * @param {object} datos - Objeto con los datos de la aplicación.
@@ -348,7 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!data.fecha) { data.fecha = new Date().toISOString().split('T')[0]; }
 
             renderHeader(data); 
-            renderHeaderDate(data); 
             renderIntro(data); 
             renderFiltros(data);
             renderNormas(data);
@@ -506,12 +477,16 @@ document.addEventListener('DOMContentLoaded', () => {
             mainContent.classList.remove('hidden');
             dashboardSection.classList.add('hidden');
             navButton.textContent = 'Estadísticas';
+            // Scroll to the top of the main content
+            mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
             // Switch to dashboard view
             mainContent.classList.add('hidden');
             dashboardSection.classList.remove('hidden');
             navButton.textContent = 'Resumen';
             renderDashboard();
+            // Scroll to the top of the dashboard section
+            dashboardSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
 

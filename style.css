@@ -81,10 +81,11 @@ a:hover {
     text-decoration: underline;
 }
 
-/*
-  Efecto "glassmorphism" para las tarjetas.
-  Crea un fondo semitransparente con desenfoque (backdrop-filter).
-*/
+main.container {
+    padding: 1rem 1rem;
+}
+
+/* Ensure vertical spacing between glass cards if they stack */
 .glass-card {
     background: rgba(30, 41, 59, 0.65);
     backdrop-filter: blur(14px);
@@ -92,6 +93,37 @@ a:hover {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+    margin-bottom: 1.5rem; /* Add some bottom margin */
+}
+
+/* Target text within dashboard charts for contrast and sharpness */
+#dashboard-section {
+    color: var(--color-text-primary); /* Set default text color for charts */
+}
+
+/* Specific overrides for ApexCharts text elements */
+.apexcharts-text,
+.apexcharts-xaxis-label,
+.apexcharts-yaxis-label,
+.apexcharts-title-text,
+.apexcharts-legend-text {
+    fill: var(--color-text-primary) !important; /* Ensure high contrast */
+    filter: none !important; /* Remove any blur/shadow */
+    text-shadow: none !important; /* Remove any text shadow */
+}
+
+/* Specific overrides for AnyChart text elements (word cloud) */
+#wordcloud-etiquetas text {
+    fill: var(--color-text-primary) !important;
+    filter: none !important;
+    text-shadow: none !important;
+}
+
+/* Ensure chart titles are sharp and clear */
+/* ApexCharts titles are often set via JS options, but this can act as a fallback */
+.apexcharts-title-text {
+    font-weight: 700 !important; /* Make titles bold */
+    font-size: 1.2rem !important; /* Adjust font size if needed */
 }
 
 /* ------------------- */
@@ -109,10 +141,17 @@ a:hover {
 
 .header-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column; /* Stack rows vertically */
+    gap: 0.5rem; /* Space between rows */
     padding: 0.5rem 1rem;
+}
+
+.header-main-row,
+.header-secondary-row {
+    display: flex;
+    justify-content: space-between; /* Align items to ends */
+    align-items: center; /* Vertically center items */
+    width: 100%; /* Take full width of parent */
 }
 
 .header-logo {
@@ -124,25 +163,6 @@ a:hover {
     width: auto;
     object-fit: contain;
     border-radius: 8px;
-}
-
-.header-brand-date-wrapper {
-    flex-grow: 1;
-    text-align: right;
-}
-
-.header-top-row {
-    display: flex;
-    justify-content: flex-end;
-    align-items: baseline;
-    gap: 1rem;
-}
-
-.header-date {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-text-secondary);
 }
 
 .nav-button {
@@ -163,6 +183,11 @@ a:hover {
     transform: scale(1.05);
 }
 
+/* Ensure the nav-button is aligned left in the secondary row */
+.header-secondary-row .nav-button {
+    margin-right: auto; /* Push button to the left */
+}
+
 /* Estilo para el enlace de la marca para que no parezca un hipervínculo estándar. */
 .brand-link {
     text-decoration: none;
@@ -179,7 +204,7 @@ a:hover {
 .brand-subtitle {
     font-size: 0.75rem;
     color: var(--color-text-secondary);
-    margin-top: 0.1rem;
+    /* margin-top: 0.1rem; - This might not be needed with flex alignment */
 }
 
 main.container {
