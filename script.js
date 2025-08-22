@@ -278,6 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     dataLabels: {
                         enabled: true,
                         formatter: function(text, op) {
+                            console.log('Datos recibidos en formatter:', op);
                             return text + ' ' + op.value
                         },
                         offsetY: 4,
