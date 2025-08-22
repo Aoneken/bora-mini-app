@@ -665,3 +665,8 @@ hr.separator {
     justify-content: center;
     align-items: center;
 }
+
+/* Treemap Card Specific Styling */
+.treemap-card {
+    padding: 2rem; /* Override default padding for treemap card */
+}

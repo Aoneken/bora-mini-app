@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         offsetY: 4,
                         style: {
-                            fontSize: '15px',
+                            fontSize: '18px',
                             colors: ['#fff']
                         }
                     }
