@@ -1,16 +1,17 @@
 <!--
-  Este es el documento principal de la aplicación web.
+  Documento principal de la aplicación web.
   Define la estructura de la página, incluyendo la cabecera, el contenido principal y el pie de página.
+  La mayoría del contenido se carga dinámicamente a través de script.js.
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Metadatos básicos del documento -->
+    <!-- Metadatos básicos -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resumen del Boletín Oficial por Orbita</title>
 
-    <!-- Meta etiquetas para Rich Previews -->
+    <!-- Meta etiquetas para previsualizaciones enriquecidas (Rich Previews) -->
     <meta property="og:title" content="Orbita - Resumen del Boletín Oficial" />
     <meta property="og:description" content="Un resumen diario de las normativas más importantes del Boletín Oficial de la República Argentina, analizadas y presentadas por Orbita." />
     <meta property="og:image" content="https://aoneken.notion.site/image/attachment%3Abefc98d2-d5bc-4b44-a6f7-ec51626a0130%3ALOGO_V2_opt.png?table=block&id=237abeb7-0880-80de-ba9d-db7bf2a803a7&spaceId=377abeb7-0880-814a-815e-00035b27454b&width=1420&userId=&cache=v2" />
@@ -20,74 +21,75 @@
     <meta name="twitter:description" content="Un resumen diario de las normativas más importantes del Boletín Oficial de la República Argentina, analizadas y presentadas por Orbita." />
     <meta name="twitter:image" content="https://aoneken.notion.site/image/attachment%3Abefc98d2-d5bc-4b44-a6f7-ec51626a0130%3ALOGO_V2_opt.png?table=block&id=237abeb7-0880-80de-ba9d-db7bf2a803a7&spaceId=377abeb7-0880-814a-815e-00035b27454b&width=1420&userId=&cache=v2" />
 
-    <!-- Importación de fuentes de Google Fonts -->
+    <!-- Fuentes de Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 
-    <!-- Enlace a la hoja de estilos CSS -->
+    <!-- Hoja de estilos principal -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Fondo de la aplicación (imagen) -->
+    <!-- Fondo decorativo de la aplicación -->
     <div id="app-background"></div>
 
-    <!-- Contenido principal de la aplicación -->
+    <!-- Contenedor principal de todo el contenido visible -->
     <div id="app-content">
-        <!-- Cabecera de la página -->
+        
+        <!-- Cabecera fija (sticky) -->
         <header id="page-header" class="sticky-header">
             <div class="container header-content">
-                <!-- Logo de la aplicación (se carga con JavaScript) -->
+                <!-- Contenedor del logo (el contenido se inyecta con JS) -->
                 <div class="header-logo">
-                    <!-- El logo de Orbita se cargará aquí con JS -->
+                    <!-- El logo de Orbita se cargará aquí -->
                 </div>
                 <!-- Contenedor de la marca y la fecha -->
                 <div class="header-brand-date-wrapper">
                     <div class="header-top-row">
-                        <!-- Fecha del boletín (se carga con JavaScript) -->
+                        <!-- Fecha del boletín (se inyecta con JS) -->
                         <div id="header-date" class="header-date"></div>
-                        <!-- Nombre de la marca -->
+                        <!-- Nombre de la marca y enlace a Telegram -->
                         <a href="https://t.me/orbita_ar" target="_blank" rel="noopener noreferrer" class="brand-link">
                             <h1 class="brand-name">Orbita</h1>
                         </a>
                     </div>
-                    <!-- Subtítulo de la marca -->
                     <p class="brand-subtitle">Boletín Oficial de la República Argentina</p>
                 </div>
             </div>
         </header>
 
-        <!-- Indicador de filtro activo -->
+        <!-- Barra flotante que muestra el filtro activo (controlado por JS) -->
         <div id="active-filter-indicator" class="active-filter-container"></div>
 
-        <!-- Contenido principal -->
+        <!-- Contenido principal de la página -->
         <main class="container">
-            <!-- Sección de introducción (síntesis del día) -->
+            
+            <!-- Sección de introducción con la síntesis del día -->
             <section id="intro-section">
                 <div class="sintesis-container">
                     <div id="sintesis-del-dia" class="glass-card sintesis-card">
                         <h3>Síntesis del Día</h3>
-                        <!-- Texto de la síntesis (se carga con JavaScript) -->
+                        <!-- El texto de la síntesis se carga aquí con JS -->
                         <p id="sintesis-texto">Cargando...</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Panel de estadísticas (se carga con JavaScript) -->
+            <!-- Panel de estadísticas (generado con JS) -->
             <section id="stats-panel" class="glass-card">
-                <!-- El panel de estadísticas se cargará aquí con JS -->
+                <!-- Las estadísticas se cargarán aquí -->
             </section>
 
-            <!-- Sección de filtros (se carga con JavaScript) -->
+            <!-- Panel de filtros por categorías (generado con JS) -->
             <nav id="filtros-section" class="glass-card">
                 <!-- Los filtros se cargarán aquí -->
             </nav>
 
-            <!-- Línea divisoria -->
+            <!-- Línea divisoria decorativa -->
             <hr class="separator">
 
-            <!-- Cuerpo de las normas (se carga con JavaScript) -->
+            <!-- Contenedor para las tarjetas de normas (generadas con JS) -->
             <div id="normas-body">
                 <!-- Las normas se cargarán aquí -->
             </div>
@@ -100,18 +102,16 @@
             <p>Contacto: <a href="mailto:comercial@aoneken.com">comercial@aoneken.com</a></p>
         </footer>
 
-        <!-- Botón para volver al principio -->
+        <!-- Botones de acción flotantes (FABs) -->
         <button id="scroll-to-top" title="Ir a Filtros">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
         </button>
-
-        <!-- Botón para limpiar filtro -->
         <button id="clear-filter-fab" title="Limpiar Filtro">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
     </div>
 
-    <!-- Enlace al script de JavaScript -->
+    <!-- Script principal de la aplicación -->
     <script src="script.js"></script>
 </body>
 </html>

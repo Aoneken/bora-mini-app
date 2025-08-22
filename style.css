@@ -1,19 +1,14 @@
 /*
   Hoja de estilos principal de la aplicaci0n.
-  Define la apariencia de todos los elementos de la interfaz.
+  Define la apariencia de todos los elementos de la interfaz, utilizando un enfoque mobile-first.
 */
 
 /* ------------------- */
 /* VARIABLES GLOBALES  */
 /* ------------------- */
 /*
-  Define los colores base y la tipograf0a para mantener una consistencia visual en toda la aplicaci0n.
-  --color-bg: Color de fondo principal.
-  --color-text-primary: Color para el texto m0s importante.
-  --color-text-secondary: Color para el texto secundario y descriptivo.
-  --color-accent: Color de acento para resaltar elementos interactivos y t0tulos.
-  --color-link: Color para los enlaces.
-  --color-link-hover: Color para los enlaces cuando el cursor est0 sobre ellos.
+  Define los colores base y la tipograf0a para mantener una consistencia visual.
+  - Se utilizan variables CSS (custom properties) para facilitar cambios globales.
 */
 :root {
     --color-bg: #020617;
@@ -27,11 +22,6 @@
 /* ------------------- */
 /* ESTILOS GENERALES   */
 /* ------------------- */
-/*
-  Estilos base para el documento.
-  - box-sizing: border-box para un modelo de caja predecible.
-  - scroll-behavior: smooth para un desplazamiento suave al hacer clic en enlaces internos.
-*/
 * {
     box-sizing: border-box;
     margin: 0;
@@ -51,8 +41,8 @@ body {
 
 /*
   Contenedor principal de la aplicaci0n.
-  - #app-background: Imagen de fondo fija.
-  - #app-content: Contenido superpuesto al fondo.
+  - #app-background: Imagen de fondo fija y decorativa.
+  - #app-content: Contenido principal superpuesto.
 */
 #app-background {
     position: fixed;
@@ -71,19 +61,15 @@ body {
     z-index: 1;
 }
 
-/*
-  Clase de utilidad para centrar contenido.
-*/
+/*Clase de utilidad para centrar y limitar el ancho del contenido principal. */
 .container {
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    padding: 0; /* CAMBIO: Padding base a 0 para controlar desde adentro */
+    padding: 0;
 }
 
-/*
-  Estilos para los enlaces.
-*/
+/* Estilos base para los enlaces. */
 a {
     color: var(--color-link);
     transition: color 0.2s ease-in-out;
@@ -97,7 +83,7 @@ a:hover {
 
 /*
   Efecto "glassmorphism" para las tarjetas.
-  Crea un fondo semitransparente y desenfocado.
+  Crea un fondo semitransparente con desenfoque (backdrop-filter).
 */
 .glass-card {
     background: rgba(30, 41, 59, 0.65);
@@ -111,9 +97,6 @@ a:hover {
 /* ------------------- */
 /* CABECERA            */
 /* ------------------- */
-/*
-  La cabecera es fija en la parte superior de la p0gina.
-*/
 .sticky-header {
     position: sticky;
     top: 0;
@@ -161,6 +144,7 @@ a:hover {
     color: var(--color-text-secondary);
 }
 
+/* Estilo para el enlace de la marca para que no parezca un hipervínculo estándar. */
 .brand-link {
     text-decoration: none;
 }
@@ -186,11 +170,11 @@ main.container {
 /* ------------------- */
 /* INDICADOR DE FILTRO */
 /* ------------------- */
+/* Barra flotante que aparece debajo del header cuando un filtro está activo. */
 .active-filter-container {
     position: sticky;
-    /* El 'top' se ajustar0 con JS para quedar debajo del header */
-    top: 60px; /* Valor inicial de fallback */
-    z-index: 19; /* Menor que el header (20) */
+    top: 60px; /* Se ajusta con JS a la altura real del header */
+    z-index: 19;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -199,7 +183,7 @@ main.container {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     
-    /* Oculto por defecto */
+    /* Oculto por defecto y animado */
     visibility: hidden;
     opacity: 0;
     transform: translateY(-100%);
@@ -230,7 +214,7 @@ main.container {
 }
 
 /* ------------------- */
-/* S0NTESIS DEL D0A    */
+/* SÍNTESIS DEL DÍA    */
 /* ------------------- */
 .sintesis-container {
     padding: 0 1rem;
@@ -255,7 +239,7 @@ main.container {
 }
 
 /* ------------------- */
-/* PANEL DE ESTAD0STICAS */
+/* PANEL DE ESTADÍSTICAS */
 /* ------------------- */
 #stats-panel {
     padding: 0;
@@ -333,7 +317,7 @@ main.container {
 /* FILTROS             */
 /* ------------------- */
 #filtros-section {
-    padding: 0.6rem 0.8rem; /* Reducido */
+    padding: 0.6rem 0.8rem;
     margin: 1rem 1rem;
 }
 
@@ -341,14 +325,14 @@ main.container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem; /* Reducido */
+    margin-bottom: 0.5rem;
     flex-wrap: wrap;
-    gap: 0.5rem; /* Reducido */
+    gap: 0.5rem;
 }
 
 .filtros-header h2 {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 1rem; /* Reducido */
+    font-size: 1rem;
     font-weight: 600;
     color: #e2e8f0;
     display: flex;
@@ -356,7 +340,6 @@ main.container {
     gap: 0.5rem;
 }
 
-/* CAMBIO: Bot0n "Limpiar" estilo GHOST */
 .filtros-header .etiqueta-btn[data-filtro="all"] {
     background: transparent;
     color: var(--color-text-secondary);
@@ -369,27 +352,28 @@ main.container {
     opacity: 1;
 }
 
+/* Estilos para el acordeón en móviles */
 .etiquetas-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.3rem; /* Reducido */
+    gap: 0.3rem;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
 }
 
 .categoria-filtro.open .etiquetas-container {
-    max-height: 500px; /* Large enough value */
+    max-height: 500px; /* Valor suficientemente grande para mostrar todas las etiquetas */
     padding-top: 0.5rem;
 }
 
 .etiqueta-btn {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem; /* Reducido */
+    font-size: 0.65rem;
     background-color: rgba(51, 65, 85, 0.7);
     color: #cbd5e1;
     border: 1px solid transparent;
-    padding: 0.15rem 0.5rem; /* Reducido */
+    padding: 0.15rem 0.5rem;
     border-radius: 9999px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -408,9 +392,9 @@ main.container {
 }
 
 .etiqueta-count {
-    font-size: 0.6rem; /* Reducido */
+    font-size: 0.6rem;
     opacity: 0.7;
-    margin-left: 0.25rem; /* Reducido */
+    margin-left: 0.25rem;
 }
 
 .filtros-body {
@@ -435,6 +419,7 @@ main.container {
     align-items: center;
 }
 
+/* Icono para el acordeón (móvil) */
 .categoria-titulo::after {
     content: '+';
     font-size: 1.5rem;
@@ -445,6 +430,7 @@ main.container {
     transform: rotate(45deg);
 }
 
+/* Estilos para pantallas grandes (escritorio) */
 @media (min-width: 769px) {
     .filtros-body {
         display: grid;
@@ -483,7 +469,7 @@ hr.separator {
     display: grid;
     gap: 1.5rem;
     padding: 0 1rem;
-    margin-bottom: 2rem; /* CAMBIO: A0adido padding y margen inferior */
+    margin-bottom: 2rem;
 }
 
 .norma-card {
@@ -521,10 +507,9 @@ hr.separator {
 .norma-card.hidden {
     opacity: 0;
     transform: scale(0.95);
-    display: none; /* Oculta el elemento para que no ocupe espacio */
+    display: none;
 }
 
-/* CAMBIO: Nuevo estilo para el emisor */
 .norma-emisor {
     font-size: 0.65rem !important;
     color: var(--color-accent) !important;
@@ -546,7 +531,6 @@ hr.separator {
     border-left: 4px solid var(--color-accent);
 }
 
-/* CAMBIO: Estilo m0s fuerte para los hashtags */
 .norma-etiquetas-container {
     margin-top: 1.25rem;
     font-family: 'IBM Plex Mono', monospace;
@@ -556,7 +540,7 @@ hr.separator {
 }
 
 /* ------------------- */
-/* PIE DE P0GINA       */
+/* PIE DE PÁGINA       */
 /* ------------------- */
 #page-footer {
     text-align: center;

@@ -1,18 +1,23 @@
-/*
-  Este archivo contiene la lógica principal de la aplicación.
-  Se encarga de:
-  - Obtener los datos del Boletín Oficial desde una fuente remota (JSON).
-  - Renderizar la información en las diferentes secciones de la página.
-  - Manejar los eventos de usuario, como el filtrado de normas.
-*/
+/**
+ * @file script.js
+ * @description Lógica principal para la mini-aplicación del Boletín Oficial.
+ * Este script se encarga de obtener, renderizar y filtrar la información de las normativas,
+ * así como de manejar todas las interacciones del usuario.
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- CONFIGURACIÓN ---
-    // URL del archivo JSON con los datos del Boletín Oficial
+    // ------------------- //
+    // --- CONFIGURACIÓN --- //
+    // ------------------- //
+
+    /** URL del archivo JSON con los datos del Boletín Oficial. */
     const DATA_URL = 'https://gist.githubusercontent.com/Aoneken/dec64d17e138aca63e0df545cd8a7d60/raw/bora_data.json';
 
-    // --- SELECTORES ---
-    // Se obtienen las referencias a los elementos del DOM que se van a manipular
+    // ---------------- //
+    // --- SELECTORES --- //
+    // ---------------- //
+
+    /** Referencias a los elementos del DOM para evitar consultas repetitivas. */
     const headerLogoContainer = document.querySelector('.header-logo');
     const headerDate = document.getElementById('header-date');
     const sintesisTexto = document.getElementById('sintesis-texto');
@@ -23,12 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearFilterFab = document.getElementById('clear-filter-fab');
     const activeFilterIndicator = document.getElementById('active-filter-indicator');
 
-    // --- RENDERIZADO ---
-    // Estas funciones se encargan de generar el HTML y mostrar los datos en la página.
+    // ------------------- //
+    // --- RENDERIZADO --- //
+    // ------------------- //
 
     /**
-     * Renderiza el logo en la cabecera.
-     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `datosInstitucionales`.
+     * Renderiza el logo en la cabecera, envolviéndolo en un enlace a Telegram.
+     * @param {object} datos - Objeto con los datos de la aplicación.
      */
     function renderHeader(datos) {
         if (!headerLogoContainer) return;
@@ -38,13 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     /**
      * Renderiza la fecha en la cabecera.
-     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `fecha`.
+     * Si no se provee una fecha, utiliza la fecha actual de Buenos Aires como fallback.
+     * @param {object} datos - Objeto con los datos de la aplicación.
      */
     function renderHeaderDate(datos) {
         if (headerDate) {
             let fechaOriginal = datos.fecha;
             if (!fechaOriginal) {
-                // Si no hay fecha, usar la de Buenos Aires.
                 const now = new Date();
                 const formatter = new Intl.DateTimeFormat('en-CA', {
                     year: 'numeric',
@@ -64,8 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Renderiza la síntesis del día.
-     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `sintesisDelDia`.
+     * Renderiza la síntesis del día en la tarjeta de introducción.
+     * @param {object} datos - Objeto con los datos de la aplicación.
      */
     function renderIntro(datos) {
         if (sintesisTexto) {
@@ -74,8 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Renderiza el panel de estadísticas.
-     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `estadisticas`.
+     * Renderiza el panel de estadísticas con un gráfico de barras.
+     * @param {object} datos - Objeto con los datos de la aplicación.
      */
     function renderStatsPanel(datos) {
         if (!statsPanel || !datos.estadisticas) return;
@@ -100,8 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Renderiza los botones de filtro.
-     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `estadisticas`.
+     * Renderiza los filtros, agrupados por categorías.
+     * @param {object} datos - Objeto con los datos de la aplicación.
      */
     function renderFiltros(datos) {
         if (!filtrosSection) return;
@@ -153,8 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Renderiza la lista de normas.
-     * @param {object} datos - Objeto con los datos de la aplicación, incluyendo `normas`.
+     * Renderiza la lista completa de normas en tarjetas individuales.
+     * @param {object} datos - Objeto con los datos de la aplicación.
      */
     function renderNormas(datos) {
         if (!normasBody) return;
@@ -180,26 +186,27 @@ document.addEventListener('DOMContentLoaded', () => {
         normasBody.innerHTML = normasHtml;
     }
 
+    // ----------------- //
+    // --- LÓGICA MAIN --- //
+    // ----------------- //
+
     /**
-     * Función principal que se ejecuta al cargar la página.
+     * Función principal que orquesta la carga y renderizado inicial de la aplicación.
      */
     async function main() {
         try {
-            // Se obtienen los datos del JSON
             const response = await fetch(DATA_URL);
             if (!response.ok) throw new Error(`Error al cargar los datos: ${response.statusText}`);
             const data = await response.json();
             if (!data.fecha) { data.fecha = new Date().toISOString().split('T')[0]; }
 
-            // Se renderizan todas las secciones de la página
             renderHeader(data); 
             renderHeaderDate(data); 
             renderIntro(data); 
             renderStatsPanel(data); 
-            renderFiltros(data); 
+            renderFiltros(data);
             renderNormas(data);
 
-            // Se configuran los event listeners
             setupEventListeners();
             adjustIndicatorPosition();
         } catch (error) {
@@ -208,10 +215,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- LÓGICA DE EVENTOS ---
+    // ----------------------- //
+    // --- MANEJO DE EVENTOS --- //
+    // ----------------------- //
 
     /**
-     * Configura los event listeners para los filtros y el botón de scroll.
+     * Configura todos los event listeners de la aplicación.
      */
     function setupEventListeners() {
         if(filtrosSection) {
@@ -225,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Ajusta la posición del indicador de filtro activo para que quede debajo del header.
+     * Ajusta la posición del indicador de filtro para que siempre aparezca debajo de la cabecera.
      */
     function adjustIndicatorPosition() {
         const header = document.getElementById('page-header');
@@ -235,25 +244,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Maneja el evento de click en el botón de limpiar filtro flotante.
+     * Maneja el clic en el botón flotante para limpiar los filtros.
      */
     function handleClearFilterClick() {
-        // Limpiar todos los filtros
         document.querySelectorAll('#filtros-section .etiqueta-btn').forEach(btn => btn.classList.remove('active'));
         document.querySelectorAll('.norma-card').forEach(card => {
             card.style.display = '';
         });
 
-        // Ocultar los indicadores
         if (clearFilterFab) clearFilterFab.classList.remove('visible');
         if (activeFilterIndicator) activeFilterIndicator.classList.remove('visible');
 
-        // Scroll a la sección de filtros
         if (filtrosSection) {
             const header = document.getElementById('page-header');
             const headerHeight = header ? header.offsetHeight : 0;
             const elementTop = filtrosSection.getBoundingClientRect().top + window.scrollY;
-            const scrollToPosition = elementTop - headerHeight - 16; // 16px de margen
+            const scrollToPosition = elementTop - headerHeight - 16;
 
             window.scrollTo({
                 top: scrollToPosition,
@@ -263,14 +269,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Maneja el evento de click en los títulos de las categorías para el acordeón.
-     * @param {Event} e - Evento de click.
+     * Maneja el clic en los títulos de categoría para el acordeón en vistas móviles.
+     * @param {Event} e - Evento de clic.
      */
     function handleCategoryClick(e) {
         const target = e.target.closest('.categoria-titulo');
         if (!target) return;
 
-        // Solo en pantallas pequeñas
         if (window.innerWidth >= 769) return;
 
         const parent = target.parentElement;
@@ -278,8 +283,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Maneja el evento de click en los botones de filtro.
-     * @param {Event} e - Evento de click.
+     * Maneja el clic en los botones de filtro de etiquetas.
+     * @param {Event} e - Evento de clic.
      */
     function handleFilterClick(e) {
         const target = e.target.closest('.etiqueta-btn');
@@ -287,7 +292,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const filtro = target.dataset.filtro;
         
-        // Se actualiza la clase 'active' en los botones de filtro
         document.querySelectorAll('#filtros-section .etiqueta-btn').forEach(btn => btn.classList.remove('active'));
         
         if (filtro !== 'all') {
@@ -303,28 +307,22 @@ document.addEventListener('DOMContentLoaded', () => {
             if (activeFilterIndicator) activeFilterIndicator.classList.remove('visible');
         }
 
-        // Se filtran las normas según la etiqueta seleccionada
         document.querySelectorAll('.norma-card').forEach(card => {
             const etiquetasDeLaTarjeta = (card.dataset.etiquetas || '').split(' ').filter(tag => tag);
 
             if (filtro === 'all' || etiquetasDeLaTarjeta.includes(filtro)) {
-                card.style.display = ''; // Se muestra la tarjeta
+                card.style.display = '';
             } else {
-                card.style.display = 'none'; // Se oculta la tarjeta
+                card.style.display = 'none';
             }
         });
 
-        // Scroll a la línea divisoria, ajustando por el header fijo
         const separator = document.querySelector('.separator');
         if (separator) {
             const header = document.getElementById('page-header');
             const headerHeight = header ? header.offsetHeight : 0;
-            
-            // Usamos getBoundingClientRect() para una posición más precisa.
             const separatorTop = separator.getBoundingClientRect().top + window.scrollY;
-            
-            // Se calcula la posición final: top del separador - altura del header - un margen.
-            const margin = 16; // 1rem de espacio para que no quede pegado al header.
+            const margin = 16;
             const scrollToPosition = separatorTop - headerHeight - margin; 
 
             window.scrollTo({
@@ -335,34 +333,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Muestra u oculta el botón de scroll según la posición del scroll.
+     * Muestra u oculta el botón de "volver arriba" según la posición del scroll.
      */
     function handleScroll() { 
         if (!filtrosSection || !scrollToTopBtn) return;
 
-        // Se calcula la posición inferior de la sección de filtros.
         const sectionOffset = filtrosSection.offsetTop + filtrosSection.offsetHeight; 
 
-        // Se muestra el botón si el scroll supera esa posición.
         const shouldBeVisible = window.scrollY > sectionOffset;
         scrollToTopBtn.classList.toggle('visible', shouldBeVisible);
     }
     
     /**
-     * Normaliza un texto para usarlo como filtro (elimina acentos, convierte a minúsculas, etc.).
+     * Normaliza un texto para usarlo como valor de filtro (minúsculas, sin acentos, etc.).
      * @param {string} texto - Texto a normalizar.
      * @returns {string} - Texto normalizado.
      */
     function normalizarParaFiltro(texto) {
         return texto.normalize('NFD')
-                     .replace(/[\u0300-\u036f]/g, "")
+                     .replace(/[̀-ͯ]/g, "")
                      .toLowerCase()
                      .replace(/^#+/g, '')
-                     .replace(/[\s-]+/g, '-')
+                     .replace(/[ -]+/g, '-')
                      .replace(/[^a-z0-9-]/g, '')
                      .trim();
     }
 
-    // Se llama a la función principal para iniciar la aplicación
+    // --- INICIO DE LA APLICACIÓN ---
     main();
 });
