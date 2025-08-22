@@ -270,11 +270,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     dataLabels: {
                         enabled: true,
                         formatter: function(text, op) {
-                            return [text, op.value]
+                            return text + ' ' + op.value
                         },
                         offsetY: 4,
                         style: {
-                            fontSize: '18px',
+                            fontSize: '20px',
                             colors: ['#fff']
                         }
                     }
