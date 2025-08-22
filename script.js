@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         kpiGroupCard.innerHTML = `
             <h2 style="color: #f1f5f9; text-align: center; margin-bottom: 20px;">Resumen de Normas</h2>
-            <div class="kpi-group-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; justify-content: center;">
+            <div class="kpi-group-container" style="display: flex; flex-direction: row; justify-content: space-between; gap: 1rem;">
                 ${kpisHtml}
             </div>
         `;
