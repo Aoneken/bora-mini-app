@@ -140,16 +140,31 @@ main.container {
 }
 
 .header-content {
-    display: flex;
-    flex-direction: row; /* Arrange columns horizontally */
-    justify-content: space-between; /* Space between left and right columns */
-    align-items: center; /* Vertically center columns */
-    gap: 1rem; /* Space between columns */
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* Logo | Centered Content | Right Content */
+    align-items: center;
+    gap: 1rem;
     padding: 0.5rem 1rem;
 }
 
-.header-left-column {
-    flex-shrink: 0; /* Prevent logo column from shrinking */
+.header-column-left {
+    /* flex-shrink: 0; */ /* Not needed with grid */
+}
+
+.header-column-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem; /* Space between date and button */
+}
+
+.header-column-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.25rem; /* Space between Orbita and Boletín Oficial */
 }
 
 .logo-link {
@@ -161,32 +176,26 @@ main.container {
     height: 40px; /* Adjust as needed */
     width: auto;
     object-fit: contain;
+    /* Glassmorphism styles for logo */
+    background: rgba(30, 41, 59, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+    padding: 0.5rem; /* Add some padding around the logo */
 }
 
-.header-right-column {
-    display: flex;
-    flex-direction: column; /* Stack rows vertically */
-    flex-grow: 1; /* Allow right column to take available space */
-    gap: 0.25rem; /* Space between rows in right column */
-}
-
+/* Remove old header column/row styles */
+.header-left-column,
+.header-right-column,
 .header-right-row-1,
-.header-right-row-2 {
-    display: flex;
-    justify-content: space-between; /* Align items to ends */
-    align-items: center; /* Vertically center items */
-    width: 100%; /* Take full width of parent */
-}
-
-.header-logo {
-    flex-shrink: 0;
-}
-
+.header-right-row-2,
+.header-logo,
 .logo-img {
-    height: 40px;
-    width: auto;
-    object-fit: contain;
-    border-radius: 8px;
+    /* These styles are no longer relevant due to the new grid layout */
+    /* Keeping them here as a comment for reference, but they should be effectively overridden or removed */
+    display: contents; /* This will make their children participate in the grid directly */
 }
 
 /* Re-introduce header-date styling */
@@ -216,8 +225,9 @@ main.container {
 }
 
 /* Ensure the nav-button is aligned left in the secondary row */
+/* This rule is likely obsolete with the new grid layout */
 .header-right-row-2 .nav-button {
-    margin-right: auto; /* Push button to the left */
+    /* margin-right: auto; */ /* Push button to the left */
 }
 
 /* Estilo para el enlace de la marca para que no parezca un hipervínculo estándar. */
@@ -612,5 +622,5 @@ hr.separator {
 }
 
 .scroll-target {
-    scroll-margin-top: 60px; /* Adjust this value based on actual header height */
+    scroll-margin-top: 100px; /* Adjust this value based on actual header height */
 }
