@@ -120,17 +120,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!filtrosSection) return;
         const { desgloseEtiquetas } = datos.estadisticas;
 
-        const categoriasDeFiltros = [
-            { nombre: "Social", etiquetas: ["#Salud", "#Educacion", "#Empleo", "#SeguridadSocial", "#DesarrolloSocial", "#ViviendaHabitat", "#Cultura"] },
-            { nombre: "Conocimiento", etiquetas: ["#CienciaYTecnica", "#Comunicaciones"] },
-            { nombre: "Estado y Justicia", etiquetas: ["#JusticiaDDHH", "#Seguridad", "#Defensa", "#RelacionesExteriores"] },
-            { nombre: "Infraestructura", etiquetas: ["#ObrasPublicas", "#TransporteAereo", "#TransporteTerrestre", "#TransporteMaritimo", "#Ambiente"] },
-            { nombre: "Energía", etiquetas: ["#Hidrocarburos", "#Electricidad", "#EnergiaNuclear", "#EnergiasRenovables", "#Biocombustibles", "#Litio"] },
-            { nombre: "Producción", etiquetas: ["#Industria", "#PyMEs", "#Agroindustria", "#Mineria", "#Turismo"] },
-            { nombre: "Comercio", etiquetas: ["#ComercioInterior", "#ComercioExterior"] },
-            { nombre: "Hacienda", etiquetas: ["#Impuestos", "#Presupuesto", "#DeudaPublica"] },
-            { nombre: "Sector Público", etiquetas: ["#Designaciones", "#Renuncias", "#Ascensos", "#BienesDelEstado"] }
-        ];
+        const categoriasDeFiltros = {
+            'Desarrollo Social y Humano': ['Salud', 'Educacion', 'Cultura', 'Deportes', 'DesarrolloSocial', 'PolíticasDeVivienda', 'CreditosHipotecarios', 'Alquileres'],
+            'Trabajo y Previsión Social': ['Empleo', 'Salarios', 'Sindicatos', 'Jubilaciones'],
+            'Justicia, Seguridad y Política Exterior': ['Justicia', 'DerechosHumanos', 'SeguridadInterior', 'Narcotrafico', 'Defensa', 'RelacionesExteriores', 'Cancilleria'],
+            'Ciencia, Tecnología y Comunicaciones': ['CienciaYTecnica', 'Comunicaciones', 'Conectividad', 'InteligenciaArtificial', 'EconomiaDelConocimiento'],
+            'Infraestructura y Servicios Públicos': ['ObrasPublicas', 'ViviendaYConstruccion', 'Vialidad', 'Transporte', 'RecursosHidricos', 'Agua', 'Saneamiento'],
+            'Ambiente y Energía': ['Hidrocarburos', 'Electricidad', 'EnergiasRenovables', 'EnergiaNuclear', 'Mineria', 'Litio', 'Ambiente', 'Sustentabilidad', 'TarifasEnergeticas'],
+            'Economía y Producción': ['ActividadEconomica', 'TipoDeCambio', 'Inflacion', 'Industria', 'PyMEs', 'Agroindustria', 'ComercioInterior', 'ComercioExterior', 'AcuerdosComerciales'],
+            'Finanzas': ['Impuestos', 'Presupuesto', 'DeudaPublica', 'Coparticipacion'],
+            'Administración': ['BienesDelEstado', 'Designaciones', 'Renuncias', 'Ascensos']
+        };
 
         const specialFormatting = {
             "PyMEs": "PyMEs",
@@ -138,9 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         let filtrosHtml = '';
-        categoriasDeFiltros.forEach(categoria => {
-            const etiquetasDeCategoria = categoria.etiquetas.map(etiquetaConHashtag => {
-                const etiqueta = etiquetaConHashtag.replace('#', '');
+        Object.keys(categoriasDeFiltros).forEach(categoriaNombre => {
+            const etiquetasDeCategoria = categoriasDeFiltros[categoriaNombre].map(etiqueta => {
                 if (desgloseEtiquetas[etiqueta]) {
                     const filtro = normalizarParaFiltro(etiqueta);
                     const cantidad = desgloseEtiquetas[etiqueta];
@@ -153,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (etiquetasDeCategoria) {
                 filtrosHtml += `<div class="categoria-filtro">
 `;
-                filtrosHtml += `<h4 class="categoria-titulo">${categoria.nombre}</h4>`;
+                filtrosHtml += `<h4 class="categoria-titulo">${categoriaNombre}</h4>`;
                 filtrosHtml += `<div class="etiquetas-container-wrapper"><div class="etiquetas-container">${etiquetasDeCategoria}</div></div>`;
                 filtrosHtml += `</div>`;
             }
