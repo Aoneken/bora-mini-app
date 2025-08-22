@@ -295,47 +295,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const data = Object.entries(stats.desgloseEtiquetas).map(([word, value]) => ({ text: word, size: value }));
 
-        const width = wordCloudContainer.clientWidth;
-        const height = wordCloudContainer.clientHeight - 40; // Adjust for title height
-
-        const maxCount = Math.max(...data.map(d => d.size));
-        const minCount = Math.min(...data.map(d => d.size));
-
-        // Scale for font size
-        const fontSizeScale = d3.scaleLinear()
-            .domain([minCount, maxCount])
-            .range([10, 60]); // Min and max font size
-
-        const fill = d3.scaleOrdinal(d3.schemeCategory10); // Color scale
-
-        d3.layout.cloud()
-            .size([width, height])
-            .words(data)
-            .padding(5)
-            .rotate(function() { return ~~(Math.random() * 2) * 90; }) // 0 or 90 degrees rotation
-            .font("Impact")
-            .fontSize(function(d) { return fontSizeScale(d.size); })
-            .on("end", draw)
-            .start();
-
-        function draw(words) {
-            d3.select("#wordcloud-chart-inner").append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .append("g")
-                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-                .selectAll("text")
-                .data(words)
-                .enter().append("text")
-                .style("font-size", function(d) { return d.size + "px"; })
-                .style("font-family", "Impact")
-                .style("fill", function(d, i) { return fill(i); })
-                .attr("text-anchor", "middle")
-                .attr("transform", function(d) {
-                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-                })
-                .text(function(d) { return d.text; });
+        if (data.length === 0) {
+            // Display a message if no data to render
+            d3.select("#wordcloud-chart-inner").html('<p style="color: #cbd5e1; text-align: center; padding-top: 50px;">No hay datos para la nube de etiquetas.</p>');
+            return;
         }
+
+        // Use setTimeout to ensure container has dimensions after being visible
+        setTimeout(() => {
+            const width = wordCloudContainer.clientWidth;
+            const height = wordCloudContainer.clientHeight - 40; // Adjust for title height
+
+            if (width <= 0 || height <= 0) {
+                console.warn("Word cloud container has zero or negative dimensions. Cannot render.");
+                d3.select("#wordcloud-chart-inner").html('<p style="color: #cbd5e1; text-align: center; padding-top: 50px;">No se pudo renderizar la nube de etiquetas (dimensiones inválidas).</p>');
+                return;
+            }
+
+            const maxCount = Math.max(...data.map(d => d.size));
+            const minCount = Math.min(...data.map(d => d.size));
+
+            // Handle case where all sizes are the same
+            const fontSizeScale = d3.scaleLinear()
+                .domain([minCount === maxCount ? minCount - 1 : minCount, maxCount]) // Adjust domain if min and max are the same
+                .range([10, 60]); // Min and max font size
+
+            const fill = d3.scaleOrdinal(d3.schemeCategory10); // Color scale
+
+            // Check if d3.layout.cloud is defined before using it
+            if (typeof d3.layout.cloud === 'undefined') {
+                console.error("d3.layout.cloud is not defined. Ensure d3-cloud library is loaded correctly.");
+                d3.select("#wordcloud-chart-inner").html('<p style="color: #cbd5e1; text-align: center; padding-top: 50px;">Error: d3-cloud no cargado correctamente.</p>');
+                return;
+            }
+
+            d3.layout.cloud()
+                .size([width, height])
+                .words(data)
+                .padding(5)
+                .rotate(function() { return ~~(Math.random() * 2) * 90; }) // 0 or 90 degrees rotation
+                .font("Impact")
+                .fontSize(function(d) { return fontSizeScale(d.size); })
+                .on("end", draw)
+                .start();
+
+            function draw(words) {
+                d3.select("#wordcloud-chart-inner").append("svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .append("g")
+                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+                    .selectAll("text")
+                    .data(words)
+                    .enter().append("text")
+                    .style("font-size", function(d) { return d.size + "px"; })
+                    .style("font-family", "Impact")
+                    .style("fill", function(d, i) { return fill(i); })
+                    .attr("text-anchor", "middle")
+                    .attr("transform", function(d) {
+                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .text(function(d) { return d.text; });
+            }
+        }, 100); // Small delay to allow DOM to render and calculate dimensions
     };
 
     const renderVerticalBarChart = (stats) => {
