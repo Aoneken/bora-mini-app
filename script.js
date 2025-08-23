@@ -558,6 +558,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = e.target.closest('.etiqueta-btn');
         if (!target) return;
 
+        e.preventDefault(); // Prevenir el comportamiento por defecto
+
         const filtro = target.dataset.filtro;
         
         document.querySelectorAll('#filtros-section .etiqueta-btn').forEach(btn => btn.classList.remove('active'));
@@ -574,6 +576,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             if (activeFilterIndicator) activeFilterIndicator.classList.remove('visible');
+            // Colapsar todas las categorías
+            document.querySelectorAll('.categoria-filtro.open').forEach(categoria => {
+                categoria.classList.remove('open');
+            });
         }
 
         document.querySelectorAll('.norma-card').forEach(card => {
