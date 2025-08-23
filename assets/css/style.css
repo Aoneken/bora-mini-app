@@ -1,0 +1,29 @@
+/* Estilo base para usar la fuente Inter */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc; /* slate-50 */
+    color: #1e293b; /* slate-800 */
+}
+/* Estilos para transiciones suaves entre vistas */
+.page {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+.page.active {
+    display: block;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Barra de progreso de lectura */
+#reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background-color: #4f46e5; /* indigo-600 */
+    width: 0%;
+    z-index: 100;
+    transition: width 0.1s linear;
+}

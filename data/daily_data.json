@@ -1,0 +1,244 @@
+{
+    "app": {
+        "title": "DataCorp",
+        "defaultPage": "main-page",
+        "navigation": [
+            { "label": "Resúmenes", "pageId": "summaries-page" },
+            { "label": "Estadísticas", "pageId": "stats-page" }
+        ]
+    },
+    "pages": [
+        {
+            "id": "main-page",
+            "content": "<section class=\"py-20 sm:py-32\">
+                <div class=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center\">
+                    <h1 class=\"text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight\">
+                        Análisis y Datos sobre el Mercado Digital
+                    </h1>
+                    <p class=\"mt-6 max-w-3xl mx-auto text-lg text-slate-600\">
+                        Explora análisis detallados y visualiza las estadísticas clave que definen el panorama actual de la industria.
+                    </p>
+                    <div class=\"mt-10 flex justify-center items-center gap-4\">
+                        <button onclick=\"showPage('summaries-page')\" class=\"bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2\">
+                            Explorar Resúmenes
+                        </button>
+                        <button onclick=\"showPage('stats-page')\" class=\"bg-white text-slate-700 font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-slate-100 border border-slate-200 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2\">
+                            Ver Estadísticas
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class=\"pb-20 sm:pb-32\">
+                <div class=\"max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10\">
+                    <!-- Columna Izquierda: Resúmenes -->
+                    <div class=\"bg-white p-8 rounded-xl shadow-lg border border-slate-200 text-center\">
+                        <div class=\"flex justify-center items-center mx-auto bg-indigo-100 rounded-full w-16 h-16\">
+                            <i data-lucide=\"file-text\" class=\"text-indigo-600 w-8 h-8\"></i>
+                        </div>
+                        <h2 class=\"mt-6 text-2xl font-bold text-slate-900\">Análisis y Resúmenes</h2>
+                        <p class=\"mt-2 text-slate-600\">
+                            Accede a informes detallados, conclusiones clave y análisis de expertos para comprender a fondo el contexto.
+                        </p>
+                        <a href=\"#\" onclick=\"showPage('summaries-page')\" class=\"mt-6 inline-flex items-center font-semibold text-indigo-600 hover:text-indigo-800\">
+                            Leer más <i data-lucide=\"arrow-right\" class=\"ml-2 w-4 h-4\"></i>
+                        </a>
+                    </div>
+                    <!-- Columna Derecha: Estadísticas -->
+                    <div class=\"bg-white p-8 rounded-xl shadow-lg border border-slate-200 text-center\">
+                        <div class=\"flex justify-center items-center mx-auto bg-indigo-100 rounded-full w-16 h-16\">
+                            <i data-lucide=\"pie-chart\" class=\"text-indigo-600 w-8 h-8\"></i>
+                        </div>
+                        <h2 class=\"mt-6 text-2xl font-bold text-slate-900\">Datos y Estadísticas</h2>
+                        <p class=\"mt-2 text-slate-600\">
+                            Interactúa con gráficos, explora tendencias y consulta las cifras más recientes a través de nuestro dashboard visual.
+                        </p>
+                        <a href=\"#\" onclick=\"showPage('stats-page')\" class=\"mt-6 inline-flex items-center font-semibold text-indigo-600 hover:text-indigo-800\">
+                            Explorar datos <i data-lucide=\"arrow-right\" class=\"ml-2 w-4 h-4\"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>"
+        },
+                    "content": "<div class=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">\n                <h1 class=\"text-4xl font-extrabold text-slate-900 tracking-tight\">Resúmenes</h1>\n                <p class=\"mt-4 text-lg text-slate-600\">Explora nuestros últimos análisis e informes sobre la industria.</p>\n                \n                <!-- Cuadrícula de tarjetas -->\n                <div class=\"mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3\">\n                    <!-- Tarjeta 1 -->\n                    <div class=\"bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200 transform hover:-translate-y-2 transition-transform duration-300 cursor-pointer\" onclick=\"showPage('summary-detail-page')\">\n                        <img src=\"https://placehold.co/600x400/6366f1/ffffff?text=Análisis\" alt=\"Imagen de análisis\" class=\"h-48 w-full object-cover\">\n                        <div class=\"p-6\">\n                            <div class=\"flex items-center gap-x-4 text-xs\">\n                                <span class=\"relative z-10 rounded-full bg-indigo-50 px-3 py-1.5 font-medium text-indigo-600\">Reporte Trimestral</span>\n                            </div>\n                            <h3 class=\"mt-4 text-xl font-semibold leading-6 text-slate-900\">Tendencias del E-commerce en Q3 2025</h3>\n                            <p class=\"mt-2 text-sm leading-6 text-slate-600\">Un análisis profundo sobre el crecimiento, los desafíos y las oportunidades en el sector del comercio electrónico durante el último trimestre.</p>\n                        </div>\n                    </div>\n                    <!-- Tarjeta 2 -->\n                    <div class=\"bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200 transform hover:-translate-y-2 transition-transform duration-300 cursor-pointer\" onclick=\"showPage('summary-detail-page')\">\n                        <img src=\"https://placehold.co/600x400/ec4899/ffffff?text=IA\" alt=\"Imagen de IA\" class=\"h-48 w-full object-cover\">\n                        <div class=\"p-6\">\n                            <div class=\"flex items-center gap-x-4 text-xs\">\n                                <span class=\"relative z-10 rounded-full bg-pink-50 px-3 py-1.5 font-medium text-pink-600\">Inteligencia Artificial</span>\n                            </div>\n                            <h3 class=\"mt-4 text-xl font-semibold leading-6 text-slate-900\">El Impacto de la IA Generativa en Marketing</h3>\n                            <p class=\"mt-2 text-sm leading-6 text-slate-600\">Cómo las nuevas herramientas de IA están transformando la creación de contenido y la personalización de campañas.</p>\n                        </div>\n                    </div>\n                    <!-- Tarjeta 3 -->\n                    <div class=\"bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200 transform hover:-translate-y-2 transition-transform duration-300 cursor-pointer\" onclick=\"showPage('summary-detail-page')\">\n                        <img src=\"https://placehold.co/600x400/10b981/ffffff?text=SaaS\" alt=\"Imagen de SaaS\" class=\"h-48 w-full object-cover\">\n                        <div class=\"p-6\">\n                           <div class=\"flex items-center gap-x-4 text-xs\">\n                                <span class=\"relative z-10 rounded-full bg-emerald-50 px-3 py-1.5 font-medium text-emerald-600\">SaaS</span>\n                            </div>\n                            <h3 class=\"mt-4 text-xl font-semibold leading-6 text-slate-900\">Estrategias de Retención para Modelos SaaS</h3>\n                            <p class=\"mt-2 text-sm leading-6 text-slate-600\">Descubre las tácticas más efectivas para reducir el churn y aumentar el valor de vida del cliente (LTV) en negocios de suscripción.</p>\n                        </div>\n                    </div>\n                    <!-- Añadir más tarjetas si es necesario -->\n                </div>\n            </div>"
+        },
+                    "content": "<div class=\"bg-white\">
+                <div class=\"max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16\">
+                    <button onclick=\"showPage('summaries-page')\" class=\"inline-flex items-center mb-8 font-semibold text-indigo-600 hover:text-indigo-800\">
+                        <i data-lucide=\"arrow-left\" class=\"mr-2 w-4 h-4\"></i> Volver a Resúmenes
+                    </button>
+                    <div class=\"prose prose-lg max-w-none prose-indigo\">
+                        <span class=\"text-base font-semibold leading-7 text-indigo-600\">Reporte Trimestral</span>
+                        <h1>Tendencias del E-commerce en Q3 2025</h1>
+                        <p class=\"lead\">El tercer trimestre de 2025 ha sido un período de consolidación y adaptación para el sector del comercio electrónico. Después de un crecimiento explosivo, las empresas ahora se centran en la rentabilidad y la experiencia del cliente.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla.</p>
+                        
+                        <h2>Subtítulo Clave 1: Personalización Avanzada</h2>
+                        <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
+                        
+                        <blockquote>
+                            <p>\"La capacidad de ofrecer una experiencia de compra verdaderamente personalizada ya no es una ventaja, es una expectativa fundamental del consumidor.\"</p>
+                        </blockquote>
+                        
+                        <h2>Subtítulo Clave 2: Sostenibilidad como Factor de Decisión</h2>
+                        <p>Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante.</p>
+                        <ul>
+                            <li>Incremento del 25% en búsquedas de \"productos sostenibles\".</li>
+                            <li>El 60% de los consumidores prefieren marcas con empaques ecológicos.</li>
+                            <li>Nuevas regulaciones impulsan la logística inversa.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>"
+        },
+                    "content": "<div class=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16\">
+                <h1 class=\"text-4xl font-extrabold text-slate-900 tracking-tight\">Estadísticas Clave</h1>
+                <p class=\"mt-4 text-lg text-slate-600\">Dashboard interactivo con las métricas más relevantes del sector.</p>
+
+                <!-- KPIs Principales -->
+                <div class=\"mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4\">
+                    <div class=\"bg-white overflow-hidden shadow rounded-lg border border-slate-200\">
+                        <div class=\"p-5\">
+                            <div class=\"flex items-center\">
+                                <div class=\"flex-shrink-0\">
+                                    <i data-lucide=\"dollar-sign\" class=\"h-6 w-6 text-green-500\"></i>
+                                </div>
+                                <div class=\"ml-5 w-0 flex-1\">
+                                    <dl>
+                                        <dt class=\"text-sm font-medium text-slate-500 truncate\">Volumen de Mercado</dt>
+                                        <dd class=\"text-3xl font-bold text-slate-900\">$1.2 Trillones</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"bg-white overflow-hidden shadow rounded-lg border border-slate-200\">
+                        <div class=\"p-5\">
+                            <div class=\"flex items-center\">
+                                <div class=\"flex-shrink-0\">
+                                    <i data-lucide=\"trending-up\" class=\"h-6 w-6 text-indigo-500\"></i>
+                                </div>
+                                <div class=\"ml-5 w-0 flex-1\">
+                                    <dl>
+                                        <dt class=\"text-sm font-medium text-slate-500 truncate\">Crecimiento Anual (YOY)</dt>
+                                        <dd class=\"text-3xl font-bold text-slate-900\">+15.2%</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"bg-white overflow-hidden shadow rounded-lg border border-slate-200\">
+                        <div class=\"p-5\">
+                            <div class=\"flex items-center\">
+                                <div class=\"flex-shrink-0\">
+                                    <i data-lucide=\"users\" class=\"h-6 w-6 text-sky-500\"></i>
+                                </div>
+                                <div class=\"ml-5 w-0 flex-1\">
+                                    <dl>
+                                        <dt class=\"text-sm font-medium text-slate-500 truncate\">Usuarios Activos</dt>
+                                        <dd class=\"text-3xl font-bold text-slate-900\">4.5 Billones</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"bg-white overflow-hidden shadow rounded-lg border border-slate-200\">
+                        <div class=\"p-5\">
+                            <div class=\"flex items-center\">
+                                <div class=\"flex-shrink-0\">
+                                    <i data-lucide=\"shopping-cart\" class=\"h-6 w-6 text-amber-500\"></i>
+                                </div>
+                                <div class=\"ml-5 w-0 flex-1\">
+                                    <dl>
+                                        <dt class=\"text-sm font-medium text-slate-500 truncate\">Conversión Promedio</dt>
+                                        <dd class=\"text-3xl font-bold text-slate-900\">2.8%</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráficos -->
+                <div class=\"mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8\">
+                    <!-- Gráfico 1: Crecimiento por Trimestre -->
+                    <div class=\"bg-white p-6 rounded-xl shadow-lg border border-slate-200\">
+                        <h3 class=\"text-lg font-semibold text-slate-900\">Crecimiento por Trimestre</h3>
+                        <canvas id=\"quarterlyGrowthChart\"></canvas>
+                    </div>
+                    <!-- Gráfico 2: Distribución por Sector -->
+                    <div class=\"bg-white p-6 rounded-xl shadow-lg border border-slate-200\">
+                        <h3 class=\"text-lg font-semibold text-slate-900\">Distribución por Sector</h3>
+                        <canvas id=\"sectorDistributionChart\"></canvas>
+                    </div>
+                </div>
+            </div>"
+        }
+    ],
+    "charts": {
+        "quarterlyGrowth": {
+            "type": "bar",
+            "data": {
+                "labels": ["Q1 2024", "Q2 2024", "Q3 2024", "Q4 2024", "Q1 2025", "Q2 2025"],
+                "datasets": [{
+                    "label": "Crecimiento (%)",
+                    "data": [5.2, 6.1, 5.8, 7.3, 8.1, 7.9],
+                    "backgroundColor": "rgba(79, 70, 229, 0.8)",
+                    "borderColor": "rgba(79, 70, 229, 1)",
+                    "borderWidth": 1,
+                    "borderRadius": 4
+                }]
+            },
+            "options": {
+                "responsive": true,
+                "plugins": {
+                    "legend": { "display": false },
+                    "tooltip": {
+                        "callbacks": {
+                            "label": "function(context) { return ` Crecimiento: ${context.raw}%`; }"
+                        }
+                    }
+                },
+                "scales": {
+                    "y": {
+                        "beginAtZero": true,
+                        "ticks": {
+                            "callback": "function(value) { return value + '%'; }"
+                        }
+                    }
+                }
+            }
+        },
+        "sectorDistribution": {
+            "type": "doughnut",
+            "data": {
+                "labels": ["Moda", "Electrónica", "Hogar y Jardín", "Salud y Belleza", "Otros"],
+                "datasets": [{
+                    "label": "Distribución del Mercado",
+                    "data": [28, 22, 18, 15, 17],
+                    "backgroundColor": [
+                        "#4f46e5",
+                        "#7c3aed",
+                        "#10b981",
+                        "#ec4899",
+                        "#64748b"
+                    ],
+                    "hoverOffset": 4
+                }]
+            },
+            "options": {
+                "responsive": true,
+                "plugins": {
+                    "legend": {
+                        "position": "bottom"
+                    },
+                    "tooltip": {
+                         "callbacks": {
+                            "label": "function(context) { return ` ${context.label}: ${context.raw}%`; }"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

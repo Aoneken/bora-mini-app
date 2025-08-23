@@ -1,138 +1,55 @@
-<!--
-  Documento principal de la aplicación web.
-  Define la estructura de la página, incluyendo la cabecera, el contenido principal y el pie de página.
-  La mayoría del contenido se carga dinámicamente a través de script.js.
--->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-    <!-- Metadatos básicos -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resumen del Boletín Oficial por Orbita</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Análisis y Datos</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Meta etiquetas para previsualizaciones enriquecidas (Rich Previews) -->
-    <meta property="og:title" content="Orbita - Resumen del Boletín Oficial" />
-    <meta property="og:description" content="Un resumen diario de las normativas más importantes del Boletín Oficial de la República Argentina, analizadas y presentadas por Orbita." />
-    <meta property="og:image" content="https://aoneken.notion.site/image/attachment%3Abefc98d2-d5bc-4b44-a6f7-ec51626a0130%3ALOGO_V2_opt.png?table=block&id=237abeb7-0880-80de-ba9d-db7bf2a803a7&spaceId=377abeb7-0880-814a-815e-00035b27454b&width=1420&userId=&cache=v2" />
-    <meta property="og:url" content="https://orbita.aoneken.com/" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Orbita - Resumen del Boletín Oficial" />
-    <meta name="twitter:description" content="Un resumen diario de las normativas más importantes del Boletín Oficial de la República Argentina, analizadas y presentadas por Orbita." />
-    <meta name="twitter:image" content="https://aoneken.notion.site/image/attachment%3Abefc98d2-d5bc-4b44-a6f7-ec51626a0130%3ALOGO_V2_opt.png?table=block&id=237abeb7-0880-80de-ba9d-db7bf2a803a7&spaceId=377abeb7-0880-814a-815e-00035b27454b&width=1420&userId=&cache=v2" />
-
-    <!-- Fuentes de Google Fonts -->
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Hoja de estilos principal -->
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3-cloud@1.2.5/build/d3.layout.cloud.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body class="antialiased">
 
-    <!-- Fondo decorativo de la aplicación -->
-    <div id="app-background"></div>
+    <!-- BARRA DE PROGRESO (SOLO VISIBLE EN LA PÁGINA DE DETALLE) -->
+    <div id="reading-progress-bar"></div>
 
-    <!-- Contenedor principal de todo el contenido visible -->
-    <div id="app-content">
-        
-        <!-- Cabecera fija (sticky) -->
-        <header id="page-header" class="sticky-header">
-            <div class="container header-content">
-                <div class="header-column-left">
-                    <a href="https://t.me/orbita_ar" target="_blank" rel="noopener noreferrer" class="logo-link">
-                        <img src="https://aoneken.notion.site/image/attachment%3Abefc98d2-d5bc-4b44-a6f7-ec51626a0130%3ALOGO_V2_opt.png?table=block&id=237abeb7-0880-80de-ba9d-db7bf2a803a7&spaceId=377abeb7-0880-814a-815e-00035b27454b&width=1420&userId=&cache=v2" alt="Orbita Logo" class="orbita-logo">
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <header class="bg-slate-50/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="#" onclick="showPage('main-page')" class="flex items-center space-x-2">
+                        <i data-lucide="bar-chart-3" class="text-indigo-600"></i>
+                        <span id="app-title" class="font-bold text-xl text-slate-800"></span>
                     </a>
                 </div>
-                <div class="header-column-center">
-                    <div id="header-date" class="header-date"></div>
-                    <button id="nav-button" class="nav-button">Estadísticas</button>
-                </div>
-                <div class="header-column-right">
-                    <a href="https://t.me/orbita_ar" target="_blank" rel="noopener noreferrer" class="brand-link">
-                        <h1 class="brand-name">Orbita</h1>
-                    </a>
-                    <p class="brand-subtitle">Boletín Oficial <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" alt="Bandera de Argentina" class="flag-icon"></p>
-                </div>
-            </div>
-        </header>
-
-        <!-- Barra flotante que muestra el filtro activo (controlado por JS) -->
-        <div id="active-filter-indicator" class="active-filter-container">
-            <span class="active-filter-text">
-                <span class="filter-label">Filtro:</span>
-                <span class="filter-name"></span>
-            </span>
-            <button id="clear-filter-btn" class="clear-filter-button" title="Limpiar Filtro">&times;</button>
-        </div>
-
-        <!-- Contenido principal de la página -->
-        <main class="container">
-            
-            <div id="main-content" class="scroll-target">
-                <!-- Sección de introducción con la síntesis del día -->
-                <section id="intro-section">
-                    <div class="sintesis-container">
-                        <div id="sintesis-del-dia" class="glass-card sintesis-card">
-                            <h3>Síntesis del Día</h3>
-                            <!-- El texto de la síntesis se carga aquí con JS -->
-                            <p id="sintesis-texto">Cargando...</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Panel de filtros por categorías (generado con JS) -->
-                <nav id="filtros-section" class="glass-card">
-                    <!-- Los filtros se cargarán aquí -->
+                <nav id="main-nav" class="hidden md:flex md:space-x-8">
+                    <!-- Los enlaces de navegación se insertarán aquí -->
                 </nav>
-
-                <!-- Línea divisoria decorativa -->
-                <hr class="separator">
-
-                <!-- Contenedor para las tarjetas de normas (generadas con JS) -->
-                <div id="normas-body">
-                    <!-- Las normas se cargarán aquí -->
-                </div>
             </div>
+        </div>
+    </header>
 
-            <section id="dashboard-section" class="hidden glass-card scroll-target">
-                <h2 class="text-2xl font-bold text-cyan-400 text-center mb-4">Estadísticas</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <main class="pt-16">
+        <!-- Contenedor para las páginas -->
+        <div id="page-container">
+            <!-- Las páginas se insertarán aquí -->
+        </div>
+    </main>
 
-                    <!-- KPIs -->
-        <div id="kpi-group-card" class="lg:col-span-1 glass-card p-4"></div>
-                    <!-- Gráficos Principales -->
-                    <div class="lg:col-span-2 glass-card p-4 treemap-card"><div id="treemap-categorias"></div></div>
-                    <div class="lg:col-span-2 glass-card p-4"><div id="wordcloud-etiquetas"></div></div>
-
-                    <!-- Gráficos Secundarios -->
-                    <div class="lg:col-span-4 glass-card p-4"><div id="bar-tipo-norma"></div></div>
-                    <div class="lg:col-span-2 glass-card p-4"><div id="donut-tipo-norma"></div></div>
-                    <div class="lg:col-span-2 glass-card p-4"><div id="bar-top-etiquetas"></div></div>
-                    <div class="lg:col-span-4 glass-card p-4"><div id="bar-top-emisores"></div></div>
-
-                </div>
-            </section>
-        </main>
-
-        <!-- Pie de página -->
-        <footer id="page-footer">
-            <p>Sistema de Relevamiento de Información Institucional de <a href="https.t.me/BORA_IA" target="_blank" rel="noopener noreferrer">Orbita</a>.</p>
-            <p>Este documento tiene fines informativos y no sustituye el contenido oficial.</p>
-            <p>Contacto: <a href="mailto:comercial@aoneken.com">comercial@aoneken.com</a></p>
-        </footer>
-
-        <!-- Botones de acción flotantes (FABs) -->
-        <button id="scroll-to-top" title="Ir a Filtros">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-        </button>
-    </div>
-
-    <!-- Script principal de la aplicación -->
-    <script src="script.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
