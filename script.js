@@ -26,8 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const filtrosSection = document.getElementById('filtros-section');
     const normasBody = document.getElementById('normas-body');
     const scrollToTopBtn = document.getElementById('scroll-to-top');
-    const clearFilterFab = document.getElementById('clear-filter-fab');
+    const clearFilterBtn = document.getElementById('clear-filter-btn');
     const activeFilterIndicator = document.getElementById('active-filter-indicator');
+    const activeFilterText = document.querySelector('.active-filter-text');
     const navButton = document.getElementById('nav-button');
     const mainContent = document.getElementById('main-content');
     const dashboardSection = document.getElementById('dashboard-section');
@@ -495,7 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
             filtrosSection.addEventListener('click', handleCategoryClick);
         }
         if(scrollToTopBtn) scrollToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        if(clearFilterFab) clearFilterFab.addEventListener('click', handleClearFilterClick);
+        if(clearFilterBtn) clearFilterBtn.addEventListener('click', handleClearFilterClick);
         if(navButton) navButton.addEventListener('click', toggleDashboard);
         window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', adjustIndicatorPosition);
@@ -520,7 +521,6 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.display = '';
         });
 
-        if (clearFilterFab) clearFilterFab.classList.remove('visible');
         if (activeFilterIndicator) activeFilterIndicator.classList.remove('visible');
 
         if (filtrosSection) {
@@ -564,14 +564,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (filtro !== 'all') {
             target.classList.add('active');
-            if (clearFilterFab) clearFilterFab.classList.add('visible');
             if (activeFilterIndicator) {
                 const etiquetaNombre = target.childNodes[0].nodeValue.trim();
-                activeFilterIndicator.innerHTML = `<span class="active-filter-button">Filtro: ${etiquetaNombre}</span>`;
+                activeFilterText.textContent = `Filtro: ${etiquetaNombre}`;
                 activeFilterIndicator.classList.add('visible');
             }
         } else {
-            if (clearFilterFab) clearFilterFab.classList.remove('visible');
             if (activeFilterIndicator) activeFilterIndicator.classList.remove('visible');
         }
 
