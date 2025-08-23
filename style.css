@@ -280,6 +280,13 @@ main.container {
     color: var(--color-text-secondary);
 }
 
+.brand-subtitle .flag-icon {
+    height: 0.8em;
+    width: auto;
+    vertical-align: middle;
+    margin-left: 0.25rem;
+}
+
 main.container {
     padding-top: 1rem;
 }
