@@ -316,18 +316,46 @@ main.container {
     height: auto;
 }
 
-.active-filter-button {
+.active-filter-text {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-right: 1rem;
+}
+
+.filter-label {
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.filter-name {
+    font-weight: 700;
     color: var(--color-accent);
-    background-color: rgba(34, 211, 238, 0.1);
-    border: 1px solid rgba(34, 211, 238, 0.3);
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
+    margin-left: 0.25rem;
+}
+
+.clear-filter-button {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: all 0.2s ease;
+}
+
+.clear-filter-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
 }
 
 /* ------------------- */

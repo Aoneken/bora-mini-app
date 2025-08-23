@@ -566,7 +566,10 @@ document.addEventListener('DOMContentLoaded', () => {
             target.classList.add('active');
             if (activeFilterIndicator) {
                 const etiquetaNombre = target.childNodes[0].nodeValue.trim();
-                activeFilterText.textContent = `Filtro: ${etiquetaNombre}`;
+                const filterNameSpan = activeFilterText.querySelector('.filter-name');
+                if (filterNameSpan) {
+                    filterNameSpan.textContent = etiquetaNombre;
+                }
                 activeFilterIndicator.classList.add('visible');
             }
         } else {
