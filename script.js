@@ -515,7 +515,8 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * Maneja el clic en el botón flotante para limpiar los filtros.
      */
-    function handleClearFilterClick() {
+    function handleClearFilterClick(event) {
+        event.preventDefault();
         document.querySelectorAll('#filtros-section .etiqueta-btn').forEach(btn => btn.classList.remove('active'));
         document.querySelectorAll('.norma-card').forEach(card => {
             card.style.display = '';
