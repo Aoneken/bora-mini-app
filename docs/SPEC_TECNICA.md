@@ -29,7 +29,15 @@ El sistema funciona como una **Aplicación de Página Única (SPA)** simple, ren
 3.  **Renderizado Dinámico:** JavaScript procesa el JSON y construye dinámicamente los elementos HTML correspondientes (tarjetas de resúmenes, KPIs, gráficos, etc.), inyectándolos en los contenedores vacíos del `index.html`.
 4.  **Interacción del Usuario:** El usuario interactúa con una página que se siente rápida y fluida, ya que todas las vistas y datos principales ya han sido cargados.
 
+#### 2.2. Despliegue (Netlify)
+* **Base directory:** (vacío)
+* **Publish directory:** (vacío)
+
+> **Nota:** Se utiliza un archivo `_redirects` en la raíz del repositorio para redirigir el tráfico de la URL principal a la carpeta `/bora`.
+
 ---
+
+### 3. Estructura de Archivos
 
 ### 3. Estructura de Archivos
 
